@@ -1,6 +1,6 @@
 package unit1;
 import java.util.*;
-
+// for github
 /**
  *
  * @author parthverma
@@ -148,7 +148,7 @@ public class BigDecimal {
     
     
     public BigDecimal sub(BigDecimal bD){
-        BigDecimal complement;
+        BigDecimal answer;
         String rv = "";
         String smallLeftStr; //before decimal
         String smallRightStr; //after decimal
@@ -186,7 +186,21 @@ public class BigDecimal {
             }
             bD.setValue(smallRightStr);
         }
-        return bD;
+        answer = this.add(bD.ninesComplement());
+        
+        if(answer.toString().length() > this.toString().length()){
+            answer.setValue(answer.toString().substring(1));
+            String carry = ".";
+            for(int i = 0; i < (answer.toString().length() - answer.toString().indexOf(".") - 1); i++){
+                carry = "0" + carry;
+            }
+            carry = "." + carry + 1;
+            answer = answer.add(new BigDecimal(carry));
+        }
+        else{
+            answer.setValue("-" + answer.ninesComplement().toString());
+        }
+        return answer;
     }
     
     public BigDecimal ninesComplement(){
