@@ -15,7 +15,7 @@ public class Main {
      */
     public static void main(String[] args) {
         BigDecimal a = new BigDecimal("12345.6789123456789");
-        BigDecimal b = new BigDecimal("11");
+        BigDecimal b = new BigDecimal("10");
         //System.out.println(b.toString());
         //System.out.println(a.toDouble());
         //System.out.println(a.add(b));
