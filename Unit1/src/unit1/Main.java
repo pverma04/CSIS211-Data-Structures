@@ -23,8 +23,8 @@ public class Main {
             System.out.println("new a " + a.toString());
             System.out.println(b.toString());
             
-            System.out.println("Sum="+a.add(b).toString());
-            //System.out.println("Subtraction="+a.sub(b).toString());
+            //System.out.println("Sum="+a.add(b).toString());
+            System.out.println("Subtraction="+a.sub(b).toString());
         }
         catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());
