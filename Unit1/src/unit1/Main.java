@@ -18,13 +18,13 @@ public class Main {
      */
     public static void main(String[] args) {
         try{
-            BigDecimal a = new BigDecimal("1.99878");
-            BigDecimal b = new BigDecimal(".8000");
-            //System.out.println("new a " + a.toString());
-            //System.out.println(b.toString());
+            BigDecimal a = new BigDecimal("1.0");
+            BigDecimal b = new BigDecimal("1.8000");
+            System.out.println("new a " + a.toString());
+            System.out.println(b.toString());
             
             System.out.println("Sum="+a.add(b).toString());
-            System.out.println("Subtraction="+a.sub(b).toString());
+            //System.out.println("Subtraction="+a.sub(b).toString());
         }
         catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());

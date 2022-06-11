@@ -19,7 +19,47 @@ public class BigDecimal {
     }
     public BigDecimal(String value) throws BigDecimalException { //set the Big Decimal Array to each number in the String argument 'value'
         int countDec = 0;
+        
         for(int i = 0; i < value.length(); i++){
+            switch (value.charAt(i)){
+                case '.':
+                    countDec++;
+                    if(countDec > 1){
+                        throw new BigDecimalException("Multiple Decimals");
+                    }
+                    else{
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break;
+                case '-':
+                    if(i > 0){
+                        throw new BigDecimalException("Invalid Character");
+                    }
+                    else{
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break; 
+                default:
+                    if (!Character.isDigit(value.charAt(i))) {
+                        throw new BigDecimalException("Invalid Character");
+                    } else {
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break;
+            }
+            /*
             if (value.charAt(i) == '.') {
                 countDec++;
             }
@@ -38,6 +78,7 @@ public class BigDecimal {
                     System.out.println(cE.getMessage());
                 }
             }
+            */
         }
         
         try {
@@ -189,68 +230,42 @@ public class BigDecimal {
         int indexDecBd = bD.toString().indexOf(".");
         BigDecimal sum = null;
         
-        if(indexDecThis < indexDecBd){
-            smallLeftStr =this.toString();
-            for(int i = 0; i < (indexDecBd - indexDecThis); i++){
-                smallLeftStr = "0" + smallLeftStr;
-            }
-            try{
-                setValue(smallLeftStr);
-            }
-            catch(BigDecimalException bDE){
-                System.out.println(bDE.getMessage());
-            }
+        //padding left side of decimal
+        smallLeftStr = (indexDecThis > indexDecBd) ? (smallLeftStr=this.toString()) : bD.toString();
+        int differenceInLengthLeft = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
+        for(int i = 0; i < differenceInLengthLeft; i++){
+            smallLeftStr = "0" + smallLeftStr;
         }
-        else if(indexDecThis > indexDecBd){
-            smallLeftStr = bD.toString();
-                   
-            for(int i = 0; i < (indexDecThis - indexDecBd); i++){
-                smallLeftStr = "0" + smallLeftStr;
+        try {
+            if (indexDecThis > indexDecBd){
+                 setValue(smallLeftStr);
             }
-            try{
-                bD.setValue(smallLeftStr);
+            else{
+                 bD.setValue(smallLeftStr);
             }
-            catch(BigDecimalException bDE){
-                System.out.println(bDE.getMessage());
-            }
-            
+        } catch (BigDecimalException bDE) {
+            System.out.println(bDE.getMessage());
         }
         
-        
-        if((this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf("."))){
-            smallRightStr = this.toString();
-            for(int i = 0; i < ((bD.toString().length() - bD.toString().indexOf(".")) - ( this.toString().length() - this.toString().indexOf("."))); i++){
-                smallRightStr += "0";
-            }
-            try{
+        //padding right side of decimal
+        smallRightStr = (this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf(".")) ? this.toString() : bD.toString();
+        int differenceInLengthRight = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
+        for (int i = 0; i < differenceInLengthRight; i++) {
+            smallRightStr += "0";
+        }
+        try {
+            if ((this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf("."))) {
                 setValue(smallRightStr);
-            }
-            catch(BigDecimalException bDE){
-                System.out.println(bDE.getMessage());
-            }
-        }
-        else if((this.toString().length() - this.toString().indexOf(".")) > (bD.toString().length() - bD.toString().indexOf("."))){
-            smallRightStr = bD.toString();
-            for(int i = 0; i < ((this.toString().length() - this.toString().indexOf(".")) - (bD.toString().length() - bD.toString().indexOf("."))); i++){
-                smallRightStr += "0";
-            }
-            try{
+            } else {
                 bD.setValue(smallRightStr);
             }
-            catch(BigDecimalException bDE){
-                System.out.println(bDE.getMessage());
-            }
-            
+        } catch (BigDecimalException bDE) {
+            System.out.println(bDE.getMessage());
         }
-        
-        //System.out.println(this.toString());
-        //System.out.println(bD.toString());
-        
         for(int i = this.toString().length() - 1; i >= 0; i--){
             if(this.toString().charAt(i) == '.'){
                 rv = "." + rv;
             }
-            
             else{
                 addOn = Character.getNumericValue(this.toString().charAt(i)) + Character.getNumericValue(bD.toString().charAt(i)) + carry;
                 //if(addOn >= 10  ){
@@ -266,14 +281,11 @@ public class BigDecimal {
         }
         try{
             sum = new BigDecimal(rv);
-        }
-        catch(BigDecimalException bDE){
+        } catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());
         }
-        
         return sum;
     }
-    
     
     public BigDecimal sub(BigDecimal bD){
         BigDecimal answer;
