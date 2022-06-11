@@ -1,30 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+/*************************************************
+ * File: Char.java
+ * Author: Parth Verma
+ * Description: This main file contains code for running the Char and BigDecimal classes, along with reading (numbers.txt) and writing (wholeNumber.txt and fraction.txt) to .txt files
+ * Date: June 6, 2022
+*************************************************/
 package unit1;
 import java.io.*;  
 import java.util.*;  
 import java.util.Scanner;
 
-/**
- *
- * @author parthverma
- */
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         try{
-            BigDecimal a = new BigDecimal("1.0");
-            BigDecimal b = new BigDecimal("1.8000");
-            System.out.println("new a " + a.toString());
-            System.out.println(b.toString());
+            String bigDecStr1 = "1.0";
+            String bigDecStr2 = "1.8000";
+            BigDecimal bigDec1 = new BigDecimal(bigDecStr1);
+            BigDecimal bigDec2 = new BigDecimal(bigDecStr2);
+            System.out.println("BigDecimal 1 = " + bigDec1.toString());
+            System.out.println("BigDecimal 2 = " + bigDec2.toString());
             
-            //System.out.println("Sum="+a.add(b).toString());
-            System.out.println("Subtraction="+a.sub(b).toString());
+            System.out.println("Sum = " + bigDec1.add(bigDec2).toString());
+            System.out.println("Difference = " + bigDec1.sub(bigDec2).toString());
         }
         catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());
@@ -34,8 +30,8 @@ public class Main {
         }
         
         
+        //code for reading numbers.txt and writing to fraction.txt and wholeNumbers.txt
         
-        /*
         ArrayList<BigDecimal> inputBD = new ArrayList<BigDecimal>();
         
         try{
@@ -64,7 +60,5 @@ public class Main {
         catch(Exception exc){
                 return;
         }
-        */
-        
     }
 }

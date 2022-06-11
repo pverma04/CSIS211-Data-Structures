@@ -1,14 +1,11 @@
+/*************************************************
+ * File: Char.java
+ * Author: Parth Verma
+ * Description: This file contains code for the CharException
+ * Date: June 6, 2022
+*************************************************/
 package unit1;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author parthverma
- */
 public class CharException extends Exception{
     public CharException(String message){
         super(message);

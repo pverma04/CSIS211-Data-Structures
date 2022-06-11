@@ -6,10 +6,6 @@
 *************************************************/
 package unit1;
 
-/**
- *
- * @author parthverma
- */
 public class Char { //complex type which includes primitive type 'char'
     //instance variable
     private char mData;

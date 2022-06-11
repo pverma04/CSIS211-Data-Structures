@@ -1,14 +1,11 @@
+/*************************************************
+ * File: Char.java
+ * Author: Parth Verma
+ * Description: This file contains code for the BigDecimal Exception
+ * Date: June 6, 2022
+*************************************************/
 package unit1;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author parthverma
- */
 public class BigDecimalException extends CharException{
     public BigDecimalException(String message){
         super(message);
