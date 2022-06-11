@@ -14,22 +14,25 @@ public class Char { //complex type which includes primitive type 'char'
     //instance variable
     private char mData;
     //constructors
-    public Char(){ //set data to null 
+    public Char() throws CharException{ //set data to null 
         //this.data = '\0';
         this('\0'); //(delegate constructor)
     }
-    public Char(char c){ //set data to arg char
+    public Char(char c) throws CharException{ //set data to arg char
         this.mData = c; //working constructor
+        if((int) c < 32 || (int) c > 127){
+            throw new CharException("Invalid character");
+        }
     }
-    public Char(int c){ //set data to int type casted as char
+    public Char(int c) throws CharException{ //set data to int type casted as char
         //this.data = (char) c;
         this((char) c); //(delegate constructor)
     }
-    public Char(final Char c){ //set data to data of separate instance of Char class
+    public Char(final Char c) throws CharException{ //set data to data of separate instance of Char class
         //this.data = c.toChar();
         this(c.toChar()); //(delegate constructor)
     }
-    public Char(String c){ //set data to first letter of arg String
+    public Char(String c) throws CharException{ //set data to first letter of arg String
         //this.data = c.charAt(0);
         this(c.charAt(0)); //(delegate constructor)
     }
@@ -84,8 +87,13 @@ public class Char { //complex type which includes primitive type 'char'
      * None
     *************************************************/
 
-    public void setChar(int c){
-        this.mData = (char) c;
+    public void setChar(int c) throws CharException{
+        if(c < 32 || c > 127){
+            throw new CharException("Invalid Character");
+        }
+        else{
+            this.mData = (char) c;
+        }
     }
     
     //accessors

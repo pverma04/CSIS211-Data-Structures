@@ -1,6 +1,6 @@
 package unit1;
 import java.util.*;
-// for github
+
 /**
  *
  * @author parthverma
@@ -9,7 +9,7 @@ public class BigDecimal {
     //instance variables
     private ArrayList<Char> mBigDecimalAL = new ArrayList<Char>();
     //constructors
-    public BigDecimal(){ //set the Big Decimal Array to 0, ., 0
+    public BigDecimal() throws BigDecimalException{ //set the Big Decimal Array to 0, ., 0
         /*************************************************
          * mBigDecimalAL.add(new Char('0'));
          * mBigDecimalAL.add(new Char('.'));
@@ -17,15 +17,42 @@ public class BigDecimal {
         *************************************************/
         this("0.0"); //(delegate constructor)
     }
-    public BigDecimal(String value){ //set the Big Decimal Array to each number in the String argument 'value'
+    public BigDecimal(String value) throws BigDecimalException { //set the Big Decimal Array to each number in the String argument 'value'
+        int countDec = 0;
         for(int i = 0; i < value.length(); i++){
-            mBigDecimalAL.add(new Char(value.charAt(i))); //(working consturctor)
-        }
-        if(value.indexOf(".") < 0){
-            mBigDecimalAL.add(new Char('.'));
-            mBigDecimalAL.add(new Char("0"));
+            if (value.charAt(i) == '.') {
+                countDec++;
+            }
+            if (countDec > 1) {
+                throw new BigDecimalException("Multiple Decimals");
+            }
+            //if (!Character.isDigit(value.charAt(i)) || value.charAt(i) != '.') {
+            if (!Character.isDigit(value.charAt(i)) && value.charAt(i) != '.') {
+                throw new BigDecimalException("Invalid Character");
+            }
+            else{
+                try{
+                    mBigDecimalAL.add(new Char(value.charAt(i))); //(working consturctor)  
+                }
+                catch(CharException cE){
+                    System.out.println(cE.getMessage());
+                }
+            }
         }
         
+        try {
+            if(countDec == 0){
+                mBigDecimalAL.add(new Char('.'));
+                mBigDecimalAL.add(new Char("0"));
+            }
+            if(value.charAt(value.length() - 1) == '.'){
+                mBigDecimalAL.add(new Char("0"));
+            }
+        } catch (CharException cE) {
+            System.out.println(cE.getMessage());
+        }
+        
+
     }
     //mutators
     
@@ -43,8 +70,19 @@ public class BigDecimal {
      * @par Notes
      * None
     *************************************************/
-    public void setValue(char ch){
-        
+    public void setValue(char ch) throws BigDecimalException{
+        if(!Character.isDigit(ch) && ch != '.'){
+            throw new BigDecimalException("Invalid Character");
+        }
+        else{
+            mBigDecimalAL.clear();
+            try {
+                mBigDecimalAL.add(new Char(ch));
+
+            } catch (CharException cE) {
+                System.out.println(cE.getMessage());
+            }
+        }
     }
     /*************************************************
      * @par Name
@@ -60,10 +98,70 @@ public class BigDecimal {
      * @par Notes
      * None
     *************************************************/
-    public void setValue(String value){
+    public void setValue(String value) throws BigDecimalException{
+        int countDec = 0;
         mBigDecimalAL.clear();
         for(int i = 0; i < value.length(); i++){
-            mBigDecimalAL.add(new Char(value.charAt(i)));
+            switch(value.charAt(i)){
+                case '.':
+                    countDec++;
+                    if(countDec > 1){
+                        throw new BigDecimalException("Multiple Decimals");
+                    }
+                    else{
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break;
+                case '-':
+                    if(i > 0){
+                        throw new BigDecimalException("Invalid Character");
+                    }
+                    else{
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break;  
+                default:
+                    if(!Character.isDigit(value.charAt(i))){
+                       throw new BigDecimalException("Invalid Character");     
+                    }
+                    else{
+                        try {
+                            mBigDecimalAL.add(new Char(value.charAt(i)));
+                        } catch (CharException cE) {
+                            System.out.println(cE.getMessage());
+                        }
+                    }
+                    break;
+            }
+            /*    
+            if(i == 0 && value.charAt(i) == '-')
+                
+            
+            if(countDec > 1){
+                throw new BigDecimalException("Multiple Decimals");
+            }
+            if((!Character.isDigit(value.charAt(i)) && value.charAt(i) != '.' ) || (value.charAt(i)="-" && i > 0) ){
+                throw new BigDecimalException("Invalid Character");
+            }
+            else{
+                if (value.charAt(i) == '.') {
+                    countDec++;
+                }
+                try {
+                    mBigDecimalAL.add(new Char(value.charAt(i)));
+                } catch (CharException cE) {
+                    System.out.println(cE.getMessage());
+                }
+            }
+            */
         }
     }
     /*************************************************
@@ -89,13 +187,19 @@ public class BigDecimal {
         String smallRightStr; //after decimal
         int indexDecThis = this.toString().indexOf(".");
         int indexDecBd = bD.toString().indexOf(".");
+        BigDecimal sum = null;
         
         if(indexDecThis < indexDecBd){
             smallLeftStr =this.toString();
             for(int i = 0; i < (indexDecBd - indexDecThis); i++){
                 smallLeftStr = "0" + smallLeftStr;
             }
-            setValue(smallLeftStr);
+            try{
+                setValue(smallLeftStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
         }
         else if(indexDecThis > indexDecBd){
             smallLeftStr = bD.toString();
@@ -103,7 +207,13 @@ public class BigDecimal {
             for(int i = 0; i < (indexDecThis - indexDecBd); i++){
                 smallLeftStr = "0" + smallLeftStr;
             }
-            bD.setValue(smallLeftStr);
+            try{
+                bD.setValue(smallLeftStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            
         }
         
         
@@ -112,14 +222,25 @@ public class BigDecimal {
             for(int i = 0; i < ((bD.toString().length() - bD.toString().indexOf(".")) - ( this.toString().length() - this.toString().indexOf("."))); i++){
                 smallRightStr += "0";
             }
-            setValue(smallRightStr);
+            try{
+                setValue(smallRightStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
         }
         else if((this.toString().length() - this.toString().indexOf(".")) > (bD.toString().length() - bD.toString().indexOf("."))){
             smallRightStr = bD.toString();
             for(int i = 0; i < ((this.toString().length() - this.toString().indexOf(".")) - (bD.toString().length() - bD.toString().indexOf("."))); i++){
                 smallRightStr += "0";
             }
-            bD.setValue(smallRightStr);
+            try{
+                bD.setValue(smallRightStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            
         }
         
         //System.out.println(this.toString());
@@ -132,7 +253,8 @@ public class BigDecimal {
             
             else{
                 addOn = Character.getNumericValue(this.toString().charAt(i)) + Character.getNumericValue(bD.toString().charAt(i)) + carry;
-                if(addOn >= 10){
+                //if(addOn >= 10  ){
+                if(addOn >= 10 && i>0 ){ // Not the first digit
                     addOn %= 10;
                     carry = 1;
                 }
@@ -142,8 +264,14 @@ public class BigDecimal {
                 rv = "" + addOn + rv;
             }
         }
+        try{
+            sum = new BigDecimal(rv);
+        }
+        catch(BigDecimalException bDE){
+            System.out.println(bDE.getMessage());
+        }
         
-        return new BigDecimal(rv);
+        return sum;
     }
     
     
@@ -160,7 +288,13 @@ public class BigDecimal {
             for(int i = 0; i < (indexDecBd - indexDecThis); i++){
                 smallLeftStr = "0" + smallLeftStr;
             }
-            setValue(smallLeftStr);
+            try{
+                setValue(smallLeftStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            
         }
         else if(indexDecThis > indexDecBd){
             smallLeftStr = bD.toString();
@@ -168,7 +302,13 @@ public class BigDecimal {
             for(int i = 0; i < (indexDecThis - indexDecBd); i++){
                 smallLeftStr = "0" + smallLeftStr;
             }
-            bD.setValue(smallLeftStr);
+            try{
+                bD.setValue(smallLeftStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            
         }
         
         
@@ -177,34 +317,78 @@ public class BigDecimal {
             for(int i = 0; i < ((bD.toString().length() - bD.toString().indexOf(".")) - (this.toString().length() - this.toString().indexOf("."))); i++){
                 smallRightStr += "0";
             }
-            setValue(smallRightStr);
+            try{
+                setValue(smallRightStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            
         }
         else if((this.toString().length() - this.toString().indexOf(".")) > (bD.toString().length() - bD.toString().indexOf("."))){
             smallRightStr = bD.toString();
             for(int i = 0; i < ((this.toString().length() - this.toString().indexOf(".")) - (bD.toString().length() - bD.toString().indexOf("."))); i++){
                 smallRightStr += "0";
             }
-            bD.setValue(smallRightStr);
+            try{
+                bD.setValue(smallRightStr);
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
         }
+        
         answer = this.add(bD.ninesComplement());
         
         if(answer.toString().length() > this.toString().length()){
-            answer.setValue(answer.toString().substring(1));
-            String carry = ".";
-            for(int i = 0; i < (answer.toString().length() - answer.toString().indexOf(".") - 1); i++){
+            String carry = "";
+            for(int i = 0; i < (answer.toString().length() - answer.toString().indexOf(".") - 2); i++){
                 carry = "0" + carry;
             }
             carry = "." + carry + 1;
-            answer = answer.add(new BigDecimal(carry));
+            try{
+                answer.setValue(answer.toString().substring(1)); // get rid of first digt from the answer
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            try{
+                answer = answer.add(new BigDecimal(carry));  
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
         }
         else{
-            answer.setValue("-" + answer.ninesComplement().toString());
+            try{
+                answer.setValue(answer.ninesComplement().toString());
+            }
+            catch(BigDecimalException bDE){
+                System.out.println(bDE.getMessage());
+            }
+            if (answer.toDouble() != 0.0){
+                try {
+                    answer.setValue("-" + answer.toString());
+                } 
+                catch (BigDecimalException bDE) {
+                    System.out.println(bDE.getMessage());
+                }
+            }
+            else{
+                try{
+                    answer.setValue("0.0");
+                } 
+                catch (BigDecimalException bDE) {
+                    System.out.println(bDE.getMessage());
+                }
+            }
         }
         return answer;
     }
     
     public BigDecimal ninesComplement(){
         String rv = "";
+        BigDecimal nComp = null;
         for(int i = this.toString().length() - 1; i >= 0; i--){
             if(this.toString().charAt(i) == '.'){
                 rv = "." + rv;
@@ -213,7 +397,26 @@ public class BigDecimal {
                 rv = (9 - Character.getNumericValue(this.toString().charAt(i))) + rv;
             }
         }
-        return new BigDecimal(rv);
+        if(rv.length() > this.toString().length()){
+            String rv1 = "";
+            for (int i = rv.length() - 1; i >= 0; i--) {
+                if (this.toString().charAt(i) == '.') {
+                    rv1 = "." + rv1;
+                } else {
+                    rv1 = (9 - Character.getNumericValue(rv.charAt(i))) + rv1;
+                }
+            }
+            rv = rv1;
+        }
+        //System.out.println(rv);
+        try{
+            nComp = new BigDecimal(rv);
+            //return nComp;
+        } 
+        catch (BigDecimalException bDE){
+            System.out.println(bDE.getMessage());
+        }
+        return nComp;
     }
     
     
@@ -279,5 +482,13 @@ public class BigDecimal {
     *************************************************/
     public Char at(int index){
         return mBigDecimalAL.get(index);
+    }
+    
+    public int wholeNumber(){
+        return Integer.parseInt(this.toString().substring(0, this.toString().indexOf(".")));
+    }
+    public double fraction(){
+        //return Integer.parseInt(this.toString().substring(this.toString().indexOf(".")));
+        return Double.parseDouble(this.toString().substring(this.toString().indexOf(".")));
     }
 }
