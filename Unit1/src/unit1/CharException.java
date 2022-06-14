@@ -1,7 +1,7 @@
 /*************************************************
  * File: Char.java
  * Author: Parth Verma
- * Description: This file contains code for the CharException
+ * Description: This file contains code for the CharException inheriting Exception
  * Date: June 6, 2022
 *************************************************/
 package unit1;

@@ -17,7 +17,7 @@ public class Char { //complex type which includes primitive type 'char'
     public Char(char c) throws CharException{ //set data to arg char
         this.mData = c; //working constructor
         if((int) c < 32 || (int) c > 127){
-            throw new CharException("Invalid character");
+            throw new CharException("Invalid character"); //throw exception for any non printable character
         }
     }
     public Char(int c) throws CharException{ //set data to int type casted as char
@@ -32,6 +32,7 @@ public class Char { //complex type which includes primitive type 'char'
         //this.data = c.charAt(0);
         this(c.charAt(0)); //(delegate constructor)
     }
+    
     //mutators
     
     /*************************************************
@@ -85,7 +86,7 @@ public class Char { //complex type which includes primitive type 'char'
 
     public void setChar(int c) throws CharException{
         if(c < 32 || c > 127){
-            throw new CharException("Invalid Character");
+            throw new CharException("Invalid Character"); //Throw exception for any non printable 
         }
         else{
             this.mData = (char) c;
@@ -108,10 +109,10 @@ public class Char { //complex type which includes primitive type 'char'
      * @par Notes
      * None
     *************************************************/
-
     public char toChar(){
         return this.mData;
     }
+    
     /*************************************************
      * @par Name
      * toInt
@@ -126,10 +127,10 @@ public class Char { //complex type which includes primitive type 'char'
      * @par Notes
      * None
     *************************************************/
-
     public int toInt(){
         return (int) this.mData;
     }
+
     /*************************************************
      * @par Name
      * toString
@@ -144,10 +145,10 @@ public class Char { //complex type which includes primitive type 'char'
      * @par Notes
      * None
     *************************************************/
-
     public String toString(){
         return "" + this.mData;
     }
+
     /*************************************************
     * @par Name
     * toHexString
@@ -162,10 +163,10 @@ public class Char { //complex type which includes primitive type 'char'
     * @par Notes
     * None
     *************************************************/
-
     public String toHexString(){
         return Integer.toHexString((int) this.mData);
     }
+
     /*************************************************
      * @par Name
      * add
@@ -179,11 +180,11 @@ public class Char { //complex type which includes primitive type 'char'
      * None
      * @par Notes
      * None
-    *************************************************/
-    
+    *************************************************/    
     public String add(char c){
         return "" + this.mData + c;
     }
+    
     /*************************************************
      * @par Name
      * add
@@ -198,7 +199,6 @@ public class Char { //complex type which includes primitive type 'char'
      * @par Notes
      * None
     *************************************************/
-
     public String add(final Char c){
         return "" + this.mData + c.toChar();
     }

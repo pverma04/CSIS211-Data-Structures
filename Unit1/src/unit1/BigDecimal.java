@@ -27,7 +27,7 @@ public class BigDecimal {
             switch (value.charAt(i)){
                 case '.':
                     countDec++;
-                    if(countDec > 1){
+                    if(countDec > 1){ //if there are multiple decimals, throw exception
                         throw new BigDecimalException("Multiple Decimals");
                     }
                     else{
@@ -39,7 +39,7 @@ public class BigDecimal {
                     }
                     break;
                 case '-':
-                    if(i > 0){
+                    if(i > 0){ //a '-' anywhere after the 0th index throws an exception
                         throw new BigDecimalException("Invalid Character");
                     }
                     else{
@@ -51,7 +51,7 @@ public class BigDecimal {
                     }
                     break; 
                 default:
-                    if (!Character.isDigit(value.charAt(i))) {
+                    if (!Character.isDigit(value.charAt(i))) { //every other character should only be a digit
                         throw new BigDecimalException("Invalid Character");
                     } else {
                         try {
@@ -65,11 +65,11 @@ public class BigDecimal {
         }
         
         try {
-            if(countDec == 0){
+            if(countDec == 0){ //if there are no decimals, add a ".0"
                 mBigDecimalAL.add(new Char('.'));
                 mBigDecimalAL.add(new Char("0"));
             }
-            if(value.charAt(value.length() - 1) == '.'){
+            if(value.charAt(value.length() - 1) == '.'){ //if the number ends with just a decimal, add a 0
                 mBigDecimalAL.add(new Char("0"));
             }
         } catch (CharException cE) {
@@ -95,7 +95,7 @@ public class BigDecimal {
      * None
     *************************************************/
     public void setValue(char ch) throws BigDecimalException{
-        if(!Character.isDigit(ch) && ch != '.'){
+        if(!Character.isDigit(ch) && ch != '.'){ //if data section is being set to anything that isn't a digit or "-"
             throw new BigDecimalException("Invalid Character");
         }
         else{
@@ -130,11 +130,11 @@ public class BigDecimal {
             switch(value.charAt(i)){
                 case '.':
                     countDec++;
-                    if(countDec > 1){
+                    if(countDec > 1){ //if there are multiple decimals, throw exception
                         throw new BigDecimalException("Multiple Decimals");
                     }
                     else{
-                        try {
+                        try { 
                             mBigDecimalAL.add(new Char(value.charAt(i)));
                         } catch (CharException cE) {
                             System.out.println(cE.getMessage());
@@ -142,7 +142,7 @@ public class BigDecimal {
                     }
                     break;
                 case '-':
-                    if(i > 0){
+                    if(i > 0){ //a '-' anywhere after the 0th index throws an exception
                         throw new BigDecimalException("Invalid Character");
                     }
                     else{
@@ -154,7 +154,7 @@ public class BigDecimal {
                     }
                     break;  
                 default:
-                    if(!Character.isDigit(value.charAt(i))){
+                    if(!Character.isDigit(value.charAt(i))){ //every other character should only be a digit
                        throw new BigDecimalException("Invalid Character");     
                     }
                     else{
@@ -194,9 +194,9 @@ public class BigDecimal {
         BigDecimal sum = null;
         
         //padding left side of decimal
-        smallLeftStr = (indexDecThis > indexDecBd) ? (smallLeftStr=this.toString()) : bD.toString();
+        smallLeftStr = (indexDecThis > indexDecBd) ? this.toString() : bD.toString(); //smallLeftStr is set to the smaller left side
         int differenceInLengthLeft = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
-        smallLeftStr = paddingZeros(smallLeftStr, differenceInLengthLeft, true);
+        smallLeftStr = paddingZeros(smallLeftStr, differenceInLengthLeft, true); //pad the number with the smaller left side with leading zeros
         
         try {
             if (indexDecThis > indexDecBd){
@@ -210,9 +210,9 @@ public class BigDecimal {
         }
         
         //padding right side of decimal
-        smallRightStr = (this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf(".")) ? this.toString() : bD.toString();
+        smallRightStr = (this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf(".")) ? this.toString() : bD.toString(); //smallRightStr is set to the smaller right side
         int differenceInLengthRight = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
-        smallRightStr = paddingZeros(smallRightStr, differenceInLengthRight, false);
+        smallRightStr = paddingZeros(smallRightStr, differenceInLengthRight, false); //pad the number with the smaller right side with leading zeros
         
         try {
             if ((this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf("."))) {
@@ -230,18 +230,18 @@ public class BigDecimal {
             }
             else{
                 addOn = Character.getNumericValue(this.toString().charAt(i)) + Character.getNumericValue(bD.toString().charAt(i)) + carry;
-                if(addOn >= 10 && i>0 ){ // Not the first digit
-                    addOn %= 10; //Greater than 10, so we need a carry of 1
+                if(addOn >= 10 && i>0 ){ //not the first digit
+                    addOn %= 10; //greater than 10, so we need a carry of 1
                     carry = 1;
                 }
                 else{
                     carry = 0;
                 }      
-                rv = "" + addOn + rv; //Final string value of the sum 
+                rv = "" + addOn + rv; //final string value of the sum 
             }
         }
         try{
-            sum = new BigDecimal(rv); // make the BigDecimal from the resulting string
+            sum = new BigDecimal(rv); //make the BigDecimal from the resulting string
         } catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());
         }
@@ -271,9 +271,9 @@ public class BigDecimal {
         int indexDecBd = bD.toString().indexOf(".");
         
         //padding left side of decimal
-        smallLeftStr = (indexDecThis > indexDecBd) ? (smallLeftStr = this.toString()) : bD.toString();
+        smallLeftStr = (indexDecThis > indexDecBd) ? (smallLeftStr = this.toString()) : bD.toString(); //smallLeftStr is set to the smaller left side
         int differenceInLengthLeft = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
-        smallLeftStr = paddingZeros(smallLeftStr, differenceInLengthLeft, true); //pad the smaller number with leading zeros
+        smallLeftStr = paddingZeros(smallLeftStr, differenceInLengthLeft, true); //pad the number with the smaller left side with leading zeros
         
         try {
             if (indexDecThis > indexDecBd) {
@@ -286,9 +286,9 @@ public class BigDecimal {
         }
         
         //padding right side of decimal
-        smallRightStr = (this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf(".")) ? this.toString() : bD.toString();
+        smallRightStr = (this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf(".")) ? this.toString() : bD.toString(); //smallRightStr is set to the smaller right side
         int differenceInLengthRight = (indexDecThis > indexDecBd) ? indexDecBd - indexDecThis : indexDecThis - indexDecBd;
-        smallRightStr = paddingZeros(smallRightStr, differenceInLengthRight, false); //pad the smaller number with trailing zeros
+        smallRightStr = paddingZeros(smallRightStr, differenceInLengthRight, false); //pad the number with the smaller right side with trailing zeros
        
         try {
             if ((this.toString().length() - this.toString().indexOf(".")) < (bD.toString().length() - bD.toString().indexOf("."))) {
@@ -310,7 +310,7 @@ public class BigDecimal {
             }
             carry = "." + carry + 1;
             try{
-                answer.setValue(answer.toString().substring(1)); // get rid of first digt from the answer
+                answer.setValue(answer.toString().substring(1)); //cut off the first digt from the answer (following the complement rules)
             }
             catch(BigDecimalException bDE){
                 System.out.println(bDE.getMessage());
@@ -366,12 +366,12 @@ public class BigDecimal {
     public BigDecimal ninesComplement(){
         String rv = "";
         BigDecimal nComp = null;
-        for(int i = this.toString().length() - 1; i >= 0; i--){
+        for(int i = this.toString().length() - 1; i >= 0; i--){ //starting from the one's place of the number (BigDecimal)
             if(this.toString().charAt(i) == '.'){
                 rv = "." + rv;
             }
             else{
-                rv = (9 - Character.getNumericValue(this.toString().charAt(i))) + rv;
+                rv = (9 - Character.getNumericValue(this.toString().charAt(i))) + rv; //creating the nine's complement
             }
         }
         if(rv.length() > this.toString().length()){
@@ -379,7 +379,7 @@ public class BigDecimal {
             for (int i = rv.length() - 1; i >= 0; i--) {
                 if (this.toString().charAt(i) == '.') {
                     rv1 = "." + rv1;
-                } else {
+                } else { //repeating the process if needed (following the nine's complement rules)
                     rv1 = (9 - Character.getNumericValue(rv.charAt(i))) + rv1;
                 }
             }

@@ -1,5 +1,5 @@
 /*************************************************
- * File: Char.java
+ * File: Main.java
  * Author: Parth Verma
  * Description: This main file contains code for running the Char and BigDecimal classes, along with reading (numbers.txt) and writing (wholeNumber.txt and fraction.txt) to .txt files
  * Date: June 6, 2022
@@ -12,15 +12,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try{
-            String bigDecStr1 = "1.0";
-            String bigDecStr2 = "1.8000";
-            BigDecimal bigDec1 = new BigDecimal(bigDecStr1);
-            BigDecimal bigDec2 = new BigDecimal(bigDecStr2);
-            System.out.println("BigDecimal 1 = " + bigDec1.toString());
-            System.out.println("BigDecimal 2 = " + bigDec2.toString());
-            
-            System.out.println("Sum = " + bigDec1.add(bigDec2).toString());
-            System.out.println("Difference = " + bigDec1.sub(bigDec2).toString());
+            BigDecimal bd1 = new BigDecimal("123.13234213412345154315245653736736736873686438365");
+            BigDecimal bd2 = new BigDecimal("2.094454524624624645624654624623464642364");
+            BigDecimal bd3 = bd1.add(bd2);
+            System.out.println(bd3.toString());
         }
         catch(BigDecimalException bDE){
             System.out.println(bDE.getMessage());
@@ -51,8 +46,8 @@ public class Main {
             PrintWriter pwFraction = new PrintWriter(new FileWriter("fraction.txt"));
             
             for(int i = 0; i < inputBD.size(); i++){
-                    pwWholeNumbers.println("" + inputBD.get(i).wholeNumber());
-                    pwFraction.println("" + inputBD.get(i).fraction() );
+                    pwWholeNumbers.println("" + inputBD.get(i).wholeNumber()); //writing whole number part to the file
+                    pwFraction.println("" + inputBD.get(i).fraction() ); //writing fraction part to the file
             }
             pwWholeNumbers.close();
             pwFraction.close();
