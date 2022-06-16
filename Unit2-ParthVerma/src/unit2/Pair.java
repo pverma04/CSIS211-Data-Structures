@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package unit2.parthverma;
+package unit2;
 
 /**
  *
@@ -23,7 +23,7 @@ public class Pair<T> {
     }
     public T getSecond(){
         return s;
-    }
+    }   
     public void setFirst(T first){
         this.f = first;
     }

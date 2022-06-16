@@ -12,8 +12,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try{
-            BigDecimal bd1 = new BigDecimal("123.13234213412345154315245653736736736873686438365");
-            BigDecimal bd2 = new BigDecimal("2.094454524624624645624654624623464642364");
+            BigDecimal bd1 = new BigDecimal("123.132");
+            BigDecimal bd2 = new BigDecimal("2.094454");
             BigDecimal bd3 = bd1.add(bd2);
             System.out.println(bd3.toString());
         }
