@@ -20,19 +20,50 @@ public class PairList<T> extends ArrayList<Pair>{
     public void addPair(T first, T second){
         this.pairList.add(new Pair((Comparable) first, (Comparable) second));
     }
+    public void addPair(T first, T second, int index){
+        //this.pairList.add(index, new Pair((Comparable) first, (Comparable) second));
+        if(index < this.pairList.size() && index >= 0){
+            ArrayList<Pair> tempList = new ArrayList<Pair>();
+            for (int i = 0; i < index; i++) {
+                tempList.add(this.pairList.get(i));
+            }
+            tempList.add(new Pair((Comparable) first, (Comparable) second));
+            for (int i = index; i < this.pairList.size(); i++) {
+                tempList.add(pairList.get(index));
+            }
+            this.pairList = tempList;
+        }
+        else{
+          System.out.println("Invalid index");
+        }
+    }
     public void addPair(Pair add){
         this.pairList.add(add);
     }
-    /*
-    public  T getFirst(T second){
-        for(Pair p : pairList){
-            if(p.getSecond() == second){
-                return p.getFirst();
+    public void addPair(Pair addOn, int index){
+        if(index < this.pairList.size() && index >= 0){
+            ArrayList<Pair> tempList = new ArrayList<Pair>();
+            /*
+            //from looking at the Java source code for ArrayList.add() and found arraycopy from there
+            Object[] currentPair = this.pairList.toArray();
+            Object[] tempPairs = tempList.toArray(); 
+            System.arraycopy(currentPair, 0, tempPairs, 0, index - 1);
+            tempList.add(addOn);
+            System.arraycopy(currentPair, index, tempPairs, index + 1, this.pairList.size() - 1);
+            */
+            for (int i = 0; i < index; i++) {
+                tempList.add(this.pairList.get(i));
             }
+            tempList.add(addOn);
+            for (int i = index; i < this.pairList.size(); i++) {
+                tempList.add(pairList.get(index));
+            }
+            this.pairList = tempList;  
         }
-    }
-    */
-    
+        else{
+            System.out.println("Invalid index");
+        }
+    } 
     public T getFirst(T second){
         Pair tempPair = null;
         for(Pair p : this.pairList){
@@ -40,12 +71,6 @@ public class PairList<T> extends ArrayList<Pair>{
                 tempPair = p;
                 break;
             }
-            /*
-            if(p.getSecond().compareTo(p) < 0){
-                tempPair = p;
-                break;
-            }
-            */
         }
         return (T) tempPair.getFirst();
     }
@@ -56,11 +81,6 @@ public class PairList<T> extends ArrayList<Pair>{
                 tempPair = p;
                 break;
             }
-            /*
-            if(p.getFirst().compareTo(first) < 0){
-                tempPair = p;
-                break;
-            }*/
         }
         return (T) tempPair.getSecond();
     }
@@ -70,7 +90,6 @@ public class PairList<T> extends ArrayList<Pair>{
         Pair toCheck = new Pair((Comparable) first, (Comparable) second);
         for(Pair p : this.pairList){
             if(p.checkEquals(toCheck)){
-            //if(p.checkEquals(p.getFirst(), (Comparable) first) && p.checkEquals(p.getSecond(), (Comparable) second)){
                 tempRemove = p;
             }
         }
@@ -83,8 +102,23 @@ public class PairList<T> extends ArrayList<Pair>{
                 tempRemove = p;
             }
         }
-        this.pairList.remove(tempRemove);
-        
+        this.pairList.remove(tempRemove);  
+    }
+    public void deletePair(int index){
+        //this.pairList.remove(index);
+        if (index < this.pairList.size() && index >= 0){
+            ArrayList<Pair> tempList = new ArrayList<Pair>();
+            for (int i = 0; i < index; i++) {
+                tempList.add(this.pairList.get(i));
+            }
+            for (int i = index + 1; i < this.pairList.size(); i++) {
+                tempList.add(pairList.get(index));
+            }
+            this.pairList = tempList;
+        }
+        else{
+            System.out.println("Invalid index");
+        }
     }
     public void printList(){
         for(Pair p : this.pairList){
@@ -109,5 +143,63 @@ public class PairList<T> extends ArrayList<Pair>{
         }
         return count;
     }
-    
+    public int getIndex(T first, T second){
+        Pair pairAtIndex = new Pair((Comparable) first, (Comparable) second);
+        for(int i = 0; i < this.pairList.size(); i++){
+            if(this.pairList.get(i).checkEquals(pairAtIndex)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public int getIndex(Pair pairAtIndex) {
+        for (int i = 0; i < this.pairList.size(); i++) {
+            if (this.pairList.get(i).checkEquals(pairAtIndex)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public boolean containsPair(T first, T second){
+        return this.getIndex(first, second) >= 0;
+    }
+    public boolean containsPair(Pair check){
+        return this.getIndex(check) >= 0;
+    }
+    public void setIndex(Pair toSet, int index){
+        if (index < this.pairList.size() && index >= 0) {
+            ArrayList<Pair> tempList = new ArrayList<Pair>();
+            for (int i = 0; i < index; i++) {
+                tempList.add(this.pairList.get(i));
+            }
+            tempList.add(toSet);
+            for (int i = index + 1; i < this.pairList.size(); i++) {
+                tempList.add(pairList.get(index));
+            }
+            this.pairList = tempList;
+        } else {
+            System.out.println("Invalid index");
+        }
+    }
+    public void setIndex(T first, T second, int index) {
+        if (index < this.pairList.size() && index >= 0) {
+            ArrayList<Pair> tempList = new ArrayList<Pair>();
+            Pair toSet = new Pair((Comparable) first, (Comparable) second);
+            for (int i = 0; i < index; i++) {
+                tempList.add(this.pairList.get(i));
+            }
+            tempList.add(toSet);
+            for (int i = index + 1; i < this.pairList.size(); i++) {
+                tempList.add(pairList.get(index));
+            }
+            this.pairList = tempList;
+        } else {
+            System.out.println("Invalid index");
+        }
+    }
+    public void clearAll(){
+        for(int i = 0; i < this.pairList.size(); i++){
+            this.set(i, new Pair(null, null));
+        }
+    }
 }

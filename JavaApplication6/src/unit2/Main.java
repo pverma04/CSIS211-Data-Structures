@@ -35,8 +35,12 @@ public class Main {
         //System.out.println(list.getFirst("test"));
         System.out.println(strList.getSecond("hello"));
         strList.printList();
-        strList.deletePair(strP);
+        //strList.deletePair(1);
         System.out.println("--");
         strList.printList();
+        System.out.println("--");
+        strList.addPair(new Pair("testing", "add"), 2);
+        strList.printList();
+        System.out.println(strList.getIndex("hey", "guys"));
     }
 }
