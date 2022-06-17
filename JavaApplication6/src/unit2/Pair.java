@@ -18,27 +18,112 @@ public class Pair<T extends Comparable<T>>{
         this.s = second;
     }
     
+    /*************************************************
+     * @par Name
+     * getFirst
+     * @purpose
+     * returns the first of the data section
+     * @param [in] :
+     * none
+     * @return
+     * T
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public T getFirst(){
         return f;
     }
+    
+    /*************************************************
+     * @par Name
+     * getSecond
+     * @purpose
+     * returns the second of the data section
+     * @param [in] :
+     * none
+     * @return
+     * T
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public T getSecond(){
         return s;
     }   
+    
+    /*************************************************
+     * @par Name
+     * setFirst
+     * @purpose
+     * sets the first of the data section
+     * @param [in] :
+     * T first
+     * @return
+     * none
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public void setFirst(T first){
         this.f = first;
     }
+    
+    /*************************************************
+     * @par Name
+     * setSecond
+     * @purpose
+     * sets the second of the data section
+     * @param [in] :
+     * T second
+     * @return
+     * none
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public void setSecond(T second){
         this.s = second;
     }
+    
+    /*************************************************
+     * @par Name
+     * checkEquals
+     * @purpose
+     * Checks if the current T value is equal to the given T value (T value could represent a first or a second)
+     * @param [in] :
+     * T current, T check
+     * @return
+     * boolean
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public boolean checkEquals(T current, T check){
-        //if(current.getClass().getSimpleName().equals("Integer") || current.getClass().getSimpleName().equals("Double") || current.getClass().getSimpleName().equals("Char")){
-        //    return current == check;
-        //}
         return current.compareTo(check) == 0;
     }
+    
+    /*************************************************
+     * @par Name
+     * checkEquals
+     * @purpose
+     * Checks if the current Pair is equal to the given Pair
+     * @param [in] :
+     * Pair current
+     * @return
+     * boolean
+     * @par References
+     * None
+     * @par Notes
+     * None
+    *************************************************/
     public boolean checkEquals(Pair check){
         return (this.checkEquals(this.f, (T) check.getFirst()) && this.checkEquals(this.s, (T) check.getSecond()));
     }
-    
 }
     
