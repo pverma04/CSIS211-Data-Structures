@@ -4,11 +4,6 @@
  */
 package unit2;
 
-
-/**
- *
- * @author parthverma
- */
 public class Main {
 
     /**
