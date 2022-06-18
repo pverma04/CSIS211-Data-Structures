@@ -1,9 +1,3 @@
-/*************************************************
- * File: PairList.java
- * Author: Parth Verma
- * Description: This file contains code for the PairList class
- * Date: June 17, 2022
-*************************************************/
 package unit2;
 
 import java.util.ArrayList;

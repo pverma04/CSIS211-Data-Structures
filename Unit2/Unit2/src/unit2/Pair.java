@@ -1,9 +1,3 @@
-/*************************************************
- * File: Pair.java
- * Author: Parth Verma
- * Description: This file contains code for the Pair class (used in PairList)
- * Date: June 17, 2022
-*************************************************/
 package unit2;
 
 public class Pair<T extends Comparable<T>>{
