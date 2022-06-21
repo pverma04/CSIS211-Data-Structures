@@ -10,20 +10,62 @@ public class Main {
     
     public static void main(String[] args) {
         
-        /*PairList<String> strList = new PairList<String>();
-        strList.addPair("hello", "world");
-        strList.addPair("bye", "everyone");
-        strList.addPair("testing", "clear");
-        strList.addPair("still", "test");
-        //strList.printList();
-        strList.deletePair("testing", "clear");
-        System.out.println("--");
+        
+        PairList<String> strList = new PairList<String>();
+        
+        System.out.println("-- Testing adding pairs");
+        strList.addPair("hello1", "world1");
+        strList.addPair("hello2", "world2");
+        strList.addPair("hello3", "world3");
+        strList.addPair("hello4", "world4");
+        Pair<String> fifthPair = new Pair<String>("hello5", "world5");
+        strList.addPair(fifthPair);
         strList.printList();
+        System.out.println("--");
+        strList.addPair(new Pair<String>("hello0 - added", "world0 - added"), 0);
+        strList.printList();
+        
+        System.out.println("Testing get size and contains pair");
+        System.out.println("size: " + strList.getSize());
+        System.out.println("Contains pair hello2, world2: " + strList.containsPair(new Pair<String>("hello2", "world2")));
+        System.out.println("Contains pair hello4, bye5: " + strList.containsPair("hello4", "bye5"));
+        
+        System.out.println("-- Testing get first/second");
+        String strF = "hello1"; //please change this value for efficiency
+        String strS = "world2"; //please change this value for efficiency
+        String first = strList.getFirst(strS);
+        String second = strList.getSecond(strF);
+        System.out.println(second == null ? "First not found" : "" + second);
+        System.out.println(first == null ? "Second not found" : "" + first);
+        
+        
+        System.out.println("-- Testing add at index");
+        strList.addPair(new Pair<String>("testing ", "add at index"), 2);
+        strList.printList();
+        
+        System.out.println("-- Testing find occurences");
+        System.out.println(strList.occurrences("hello1", true));
+        
+        System.out.println("-- Testing get index");
+        System.out.println(strList.getIndex("hello3", "world3"));
 
-        System.out.println("-- clearing");
+        System.out.println("-- Testing set index");
+        strList.setIndex(new Pair<String>("changed", "value"), 4);
+        strList.printList();
+        
+        System.out.println("-- Testing deleting pairs");
+        strList.deletePair("hello1", "world1");
+        strList.printList();
+        System.out.println("--");
+        strList.deletePair("testing ", "add at index");
+        strList.deletePair(0);
+        strList.printList();
+        
+        System.out.println("-- Testing clear all");
+
         strList.clearAll();
         strList.printList();
-        */
+        
         
         /*
         PairList<Integer> intList = new PairList<Integer>();
@@ -81,7 +123,7 @@ public class Main {
         intList.clearAll();
         intList.printList();
         */
-        
+        /*
         PairList<Double> dList = new PairList<Double>();
 
         System.out.println("-- Testing adding pairs");
@@ -135,5 +177,6 @@ public class Main {
 
         dList.clearAll();
         dList.printList();
+        */
     }
 }
