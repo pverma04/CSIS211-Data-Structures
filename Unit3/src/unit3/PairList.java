@@ -11,7 +11,7 @@ public class PairList <T> extends LinkedList<Pair>{
     }
     public void addPair(T first, T second){
         //Pair p=new Pair((Comparable) first, (Comparable) second);
-        Pair p=new Pair((Comparable) first, (Comparable) second);
+        Pair p = new Pair((Comparable) first, (Comparable) second);
 
         System.out.println(p.getFirst()+"---"+p.getSecond());
         pairLinkedList.addToEnd(p);

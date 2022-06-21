@@ -37,12 +37,15 @@ public class Main {
         System.out.println(test.getSize());
         */
         
-        PairList<Integer> test1 = new PairList<Integer>();
-        test1.addPair(1, 2);
-        test1.print();
+        //PairList<Integer> test1 = new PairList<Integer>();
+        //test1.addPair(1, 2);
+        //test1.print();
         //test1.addPair(3, 4);
         //test1.addPair(5, 6);
         //test1.print();
+        Integer a = 1;
+        Integer b = 2;
+        System.out.println(a.equals(b));
 
     }
     
