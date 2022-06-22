@@ -21,37 +21,16 @@ public class PairList <T> extends LinkedList<Pair>{
         //this.pairLinkedList.addToEnd(addOn);
         super.addToEnd(addOn);
     }
-    /*
-    public void insertPair(T first, T second, Pair search) {
-        
-        Node p = pairLinkedList.head;
-        while((Pair) p.data != search){
-            p = p.next;
-        }
-        
-        this.pairLinkedList.insert(search, new Pair(first, second));
-    }
-     */
     
-    /*
-    --------
-    --------
-    
-    public void insertPair(Pair search, Pair addOn){ //NOTE TO PROFESSOR: this method isn't working as expected
-        //this.pairLinkedList.insert(search, addOn);
-        super.insert(search, addOn);
-    }
-    */
-    
-    public void insertPair(Pair search, Pair addOn){ //NOTE TO PROFESSOR: the second method that does work, but doesn't use any methods from LinkedList
-        Node nodeInsert = new Node(addOn);
-        //Node p = this.pairLinkedList.head;
+    public void insertPair(Pair search, T first, T second) {
         Node p = super.head;
-        if (p != null) {
+        Node nodeInsert = new Node(new Pair(first, second));
+        if (p.next != null) {
             if (p.next == null && ((Pair) p.data).checkEquals(search)) {
                 p.next = nodeInsert;
                 nodeInsert.next = null;
-            } else {
+            } 
+            else {
                 while ((p.next) != null) { //must compare type T
                     if (((Pair) p.data).checkEquals(search)) {
                         nodeInsert.next = p.next; //both now equal the same next
@@ -62,6 +41,30 @@ public class PairList <T> extends LinkedList<Pair>{
             }
         }
     }
+    
+    
+    @Override
+    public void insert(Pair search, Pair addOn){ //NOTE TO PROFESSOR: the second method that does work, but doesn't use any methods from LinkedList
+        Node nodeInsert = new Node(addOn);
+        //Node p = this.pairLinkedList.head;
+        Node p = super.head;
+        if (p.next != null) {
+            if (p.next == null && ((Pair) p.data).checkEquals(search)) {
+                p.next = nodeInsert;
+                nodeInsert.next = null;
+            } 
+            else {
+                while ((p.next) != null) { //must compare type T
+                    if (((Pair) p.data).checkEquals(search)) {
+                        nodeInsert.next = p.next; //both now equal the same next
+                        p.next = nodeInsert; //p's next is now the new Node, setting nodeInsert into its original spot
+                    }
+                    p = p.next;
+                }
+            }
+        }
+    }
+   
     public T getFirst(T second){
         Node p = super.head;
         while(p.next != null){
@@ -83,8 +86,8 @@ public class PairList <T> extends LinkedList<Pair>{
         return (T) "Pair not found";
     }
     
-    
-    public void printPairList(){
+    @Override
+    public void printList(){
         //this.pairLinkedList.printList();
         //Node p = this.pairLinkedList.head;
         Node p = super.head;
@@ -122,6 +125,7 @@ public class PairList <T> extends LinkedList<Pair>{
         return (T) ((Pair) p.data).getSecond();
     }
     */
+    
     public int getSize(){
         return super.getSize();
     }
@@ -139,7 +143,8 @@ public class PairList <T> extends LinkedList<Pair>{
         */
         return super.getLastNode();
     }
-    public void deletePair(Pair remove){
+    @Override
+    public void delete(Pair remove){
         Node p = super.head;
         while(p.next != null){
             if(((Pair)p.data).checkEquals(remove)){
@@ -148,5 +153,34 @@ public class PairList <T> extends LinkedList<Pair>{
             }
             p = p.next;
         }
+    }
+    @Override
+    public boolean contains(Pair check){
+        Node p = super.head;
+        while(p.next != null){
+            if(((Pair)p.data).checkEquals(check)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int occurences(T check, boolean isFirst){
+        int count = 0;
+        Node p = super.head;
+        if(isFirst){
+            while(p.next != null){
+                if(((Pair) p.data).checkEquals(((Pair) p.data).getFirst(), check)){
+                    count++;
+                }
+            }
+        }
+        else{
+            while (p.next != null) {
+                if (((Pair) p.data).checkEquals(((Pair) p.data).getSecond(), check)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }

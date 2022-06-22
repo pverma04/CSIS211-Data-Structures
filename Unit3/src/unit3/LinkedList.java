@@ -89,7 +89,7 @@ public class LinkedList<T> {
     public boolean contains(T search){
         Node p = this.head;
         while(p.next != null){
-            if(p.data == search){
+            if(p.data.equals(search)){
                 return true;
             }
             p = p.next;

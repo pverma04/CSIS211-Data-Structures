@@ -19,10 +19,11 @@ public class Main {
         System.out.println("----------");
         test1.addPair(1, 2);
         test1.addPair(3, 4);
-        test1.printPairList();
+        test1.insert(new Pair(1, 2), new Pair(5, 6));
+        test1.printList();
         System.out.println("----------");
-        test1.deletePair(new Pair(1, 2));
-        test1.printPairList();
+        test1.delete(new Pair(1, 2));
+        test1.printList();
 
         
         
