@@ -8,7 +8,7 @@ package unit3;
  *
  * @author parthverma
  */
-public class Node<T extends Comparable<T>> {
+public class Node<T> {
 //public class Node<T> {
     //data section
     T data;
@@ -17,7 +17,7 @@ public class Node<T extends Comparable<T>> {
    
     public Node(T data){
         this.data = data;
-        this.next = null;
+        //this.next = null;
    }
    
 }

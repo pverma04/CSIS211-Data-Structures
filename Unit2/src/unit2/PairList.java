@@ -14,6 +14,7 @@ public class PairList<T> extends ArrayList<Pair>{
     
     public PairList(){
         //pairList = null;
+        super();
     }
     
     /*************************************************
@@ -31,7 +32,8 @@ public class PairList<T> extends ArrayList<Pair>{
      * None
     *************************************************/
     public void addPair(T first, T second){
-        this.pairList.add(new Pair((Comparable) first, (Comparable) second));
+       add(new Pair((Comparable) first, (Comparable) second));
+        //super.add(new Pair((Comparable) first, (Comparable) second));
     }
     
     /*************************************************
@@ -50,7 +52,7 @@ public class PairList<T> extends ArrayList<Pair>{
     *************************************************/
     public void addPair(T first, T second, int index){
         //this.pairList.add(index, new Pair((Comparable) first, (Comparable) second));
-        if(index < this.pairList.size() && index >= 0){
+        if(index < super.size() && index >= 0){
             ArrayList<Pair> tempList = new ArrayList<Pair>();
             for (int i = 0; i < index; i++) {
                 tempList.add(this.getPair(i));

@@ -14,39 +14,42 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*
-        LinkedList<Integer> test = new LinkedList<Integer>();
-        test.addToEnd(1);
-        test.addToEnd(2);
-        test.addToEnd(3);
-        test.addToEnd(4);
-        test.addToEnd(5);
-        test.printList();
-        System.out.println("--");
-        test.insert(1, 7);
-        test.printList();
-        System.out.println("--");
-        test.delete(4);
-        test.printList();
-        System.out.println("--");
-        test.delete(7);
-        test.printList();
-        System.out.println("--");
-        System.out.println(test.contains(10));
-        System.out.println("--");
-        System.out.println(test.getSize());
-        */
+       
+        PairList<Integer> test1 = new PairList<Integer>();
+        System.out.println("----------");
+        test1.addPair(1, 2);
+        test1.addPair(3, 4);
+        test1.printPairList();
+        System.out.println("----------");
+        test1.deletePair(new Pair(1, 2));
+        test1.printPairList();
+
         
-        //PairList<Integer> test1 = new PairList<Integer>();
-        //test1.addPair(1, 2);
-        //test1.print();
-        //test1.addPair(3, 4);
-        //test1.addPair(5, 6);
-        //test1.print();
-        Integer a = 1;
-        Integer b = 2;
-        System.out.println(a.equals(b));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        //Here is an example of the LinkedList insert method working as expected
+       
+        System.out.println("----------");
+        //test1.addPair(10, 11, new Pair(3, 4));// addPair(T data,
+        LinkedList<Integer> lL = new LinkedList<Integer>();
+        lL.addToEnd(1);
+        lL.addToEnd(2);
+        lL.printList();
+        System.out.println("----------");
+        lL.insert(1, 3);
+        lL.printList();
+        System.out.println("----------");
+        lL.delete(1);
+        lL.printList();
+        */
 
     }
-    
 }

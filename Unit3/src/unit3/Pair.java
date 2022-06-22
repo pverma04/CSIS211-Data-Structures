@@ -6,7 +6,7 @@
 *************************************************/
 package unit3;
 
-public class Pair<T extends Comparable<T>>{
+public class Pair<T>{
     //instance variable of type T
     private T f;
     private T s;
@@ -103,7 +103,7 @@ public class Pair<T extends Comparable<T>>{
      * None
     *************************************************/
     public boolean checkEquals(T current, T check){
-        return current.compareTo(check) == 0;
+        return current.equals(check);
     }
     
     /*************************************************
