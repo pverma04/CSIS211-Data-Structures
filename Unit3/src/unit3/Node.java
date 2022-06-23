@@ -1,13 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+/** ***********************************************
+ * File: Node.java
+ * Author: Parth Verma
+ * Description: This file contains code for the Node class
+ * Date: June 23, 2022
+ ************************************************ */
 package unit3;
 
-/**
- *
- * @author parthverma
- */
 public class Node<T> {
 //public class Node<T> {
     //data section
