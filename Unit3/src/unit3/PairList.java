@@ -11,60 +11,63 @@ public class PairList <T> extends LinkedList<Pair>{
         super();
     }
     public void addPair(T first, T second){
-        //this.pairLinkedList.addToEnd(new Pair(first, second));
-        Pair add = new Pair(first, second);
-        super.addToEnd(add);
-        //super.addToEnd(new Pair(first, second));
+        super.addToEnd(new Pair(first, second));
     }
-    
     public void addPair(Pair addOn){
-        //this.pairLinkedList.addToEnd(addOn);
         super.addToEnd(addOn);
     }
-    
-    public void insertPair(Pair search, T first, T second) {
+    public void insert(Pair search, T first, T second) {
         Node p = super.head;
         Node nodeInsert = new Node(new Pair(first, second));
-        if (p.next != null) {
-            if (p.next == null && ((Pair) p.data).checkEquals(search)) {
-                p.next = nodeInsert;
-                nodeInsert.next = null;
-            } 
-            else {
-                while ((p.next) != null) { //must compare type T
-                    if (((Pair) p.data).checkEquals(search)) {
-                        nodeInsert.next = p.next; //both now equal the same next
-                        p.next = nodeInsert; //p's next is now the new Node, setting nodeInsert into its original spot
-                    }
-                    p = p.next;
-                }
-            }
+        Node toSearch = this.getNode(search);
+        if(toSearch != null){
+            nodeInsert.next = toSearch.next; //both now equal the same next
+            toSearch.next = nodeInsert; //p's next is now the new Node, setting nodeInsert into its original spot
         }
     }
-    
-    
     @Override
-    public void insert(Pair search, Pair addOn){ //NOTE TO PROFESSOR: the second method that does work, but doesn't use any methods from LinkedList
-        Node nodeInsert = new Node(addOn);
-        //Node p = this.pairLinkedList.head;
+    public void insert(Pair search, Pair insert){ //NOTE TO PROFESSOR: the second method that does work, but doesn't use any methods from LinkedList
         Node p = super.head;
-        if (p.next != null) {
-            if (p.next == null && ((Pair) p.data).checkEquals(search)) {
-                p.next = nodeInsert;
-                nodeInsert.next = null;
-            } 
-            else {
-                while ((p.next) != null) { //must compare type T
-                    if (((Pair) p.data).checkEquals(search)) {
-                        nodeInsert.next = p.next; //both now equal the same next
-                        p.next = nodeInsert; //p's next is now the new Node, setting nodeInsert into its original spot
-                    }
-                    p = p.next;
-                }
-            }
+        Node nodeInsert = new Node(insert);
+        Node toSearch = this.getNode(search);
+        if (toSearch != null) {
+            nodeInsert.next = toSearch.next; //both now equal the same next
+            toSearch.next = nodeInsert; //p's next is now the new Node, setting nodeInsert into its original spot
         }
     }
-   
+    public void insertAtIndex(Pair insert, int index){
+        Node p = super.head;
+        Node nodeInsert = new Node(insert);
+        int indexCount = 0;
+        if(index >= super.getSize()){
+            super.addToEnd(insert);
+        }
+        else if(index == 0){
+            super.addToFirst(insert);
+        }
+        else{
+            Node prevNode = super.getNode(index - 1);
+            nodeInsert.next = prevNode.next;
+            prevNode.next = nodeInsert;
+        }
+    }
+    public void insertAtIndex(T first, T second, int index) {
+        Node p = super.head;
+        Pair insert = new Pair(first, second);
+        Node nodeInsert = new Node(insert);
+        int indexCount = 0;
+        if (index >= super.getSize()) {
+            super.addToEnd(insert);
+        } 
+        else if (index == 0) {
+            super.addToFirst(insert);
+        } 
+        else {
+            Node prevNode = super.getNode(index - 1);
+            nodeInsert.next = prevNode.next;
+            prevNode.next = nodeInsert;
+        }
+    }
     public T getFirst(T second){
         Node p = super.head;
         while(p.next != null){
@@ -73,7 +76,7 @@ public class PairList <T> extends LinkedList<Pair>{
             }
             p = p.next;
         }
-        return (T) "Pair not found";
+        return null;
     }
     public T getSecond(T first) {
         Node p = super.head;
@@ -83,9 +86,8 @@ public class PairList <T> extends LinkedList<Pair>{
             }
             p = p.next;
         }
-        return (T) "Pair not found";
+        return null;
     }
-    
     @Override
     public void printList(){
         //this.pairLinkedList.printList();
@@ -105,49 +107,28 @@ public class PairList <T> extends LinkedList<Pair>{
             System.out.println(((Pair) p.data).getFirst() + ", " + ((Pair) p.data).getSecond());
         }
     }
-    /*
-    public T getFirst(T second){
-        Node p = super.head;
-        while(p.next != null){
-            if(((Pair) p.data).getSecond() != second){
-                p = p.next;
-            }
-        }
-        return (T) ((Pair) p.data).getFirst();
-    }
-    public T getSecond(T first) {
-        Node p = super.head;
-        while(p.next != null){
-            if(((Pair) p.data).getFirst() != first){
-                p = p.next;
-            }
-        }
-        return (T) ((Pair) p.data).getSecond();
-    }
-    */
-    
-    public int getSize(){
-        return super.getSize();
-    }
     public Pair getFirstPair(){
-        //return (Pair) super.head.data;
-        return super.getFirstNode();
+        return (Pair) super.getFirstNodeData();
     }
     public Pair getLastPair(){
-        /*
-        Node p = super.head;
-        while(p.next != null){
-            p = p.next;
-        }
-        return (Pair) p.data;
-        */
-        return super.getLastNode();
+        return (Pair) super.getLastNodeData();
     }
     @Override
     public void delete(Pair remove){
         Node p = super.head;
         while(p.next != null){
-            if(((Pair)p.data).checkEquals(remove)){
+            if(((Pair)p.next.data).checkEquals(remove)){
+                p.next = p.next.next;
+                break;
+            }
+            p = p.next;
+        }
+    }
+    public void delete(T first, T second) {
+        Node p = super.head;
+        Pair remove = new Pair(first, second);
+        while (p.next != null) {
+            if (((Pair) p.next.data).checkEquals(remove)){
                 p.next = p.next.next;
                 break;
             }
@@ -156,13 +137,12 @@ public class PairList <T> extends LinkedList<Pair>{
     }
     @Override
     public boolean contains(Pair check){
-        Node p = super.head;
-        while(p.next != null){
-            if(((Pair)p.data).checkEquals(check)){
-                return true;
-            }
+        if(this.getNode(check) != null){
+            return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
     public int occurences(T check, boolean isFirst){
         int count = 0;
@@ -172,15 +152,48 @@ public class PairList <T> extends LinkedList<Pair>{
                 if(((Pair) p.data).checkEquals(((Pair) p.data).getFirst(), check)){
                     count++;
                 }
+                p = p.next;
             }
+            if (((Pair) p.data).checkEquals(((Pair) p.data).getFirst(), check)) {
+                count++;
+            }
+            
         }
         else{
             while (p.next != null) {
                 if (((Pair) p.data).checkEquals(((Pair) p.data).getSecond(), check)) {
                     count++;
                 }
+                p = p.next;
+            }
+            if (((Pair) p.data).checkEquals(((Pair) p.data).getSecond(), check)) {
+                    count++;
             }
         }
         return count;
+    }
+    @Override
+    public Node getNode(Pair check){
+        Node p = super.head;
+        Node rv = null;
+        
+        if(p != null){
+            if(p.next == null && ((Pair) p.data).checkEquals(check)){
+                rv = p;
+            }
+            else{
+                while ((p.next) != null) { //must compare type T
+                    if(((Pair) p.data).checkEquals(check)){ //NOTE TO PROFESSOR: checking if they are equal does not work here          
+                        rv = p;
+                        break;
+                    }
+                    p = p.next;
+                }
+                if (((Pair) p.data).checkEquals(check)) {
+                    rv = p;
+                }
+            }
+        }
+        return rv;
     }
 }

@@ -123,5 +123,8 @@ public class Pair<T>{
     public boolean checkEquals(Pair check){
         return (this.checkEquals(this.f, (T) check.getFirst()) && this.checkEquals(this.s, (T) check.getSecond()));
     }
+    public String toString(){
+        return this.getFirst() + ", " + this.getSecond();
+    }
 }
     
