@@ -37,7 +37,7 @@ public class Main {
         System.out.println(test1.getLastPair().toString());
         */
         
-        /*
+        
         PairList<String> test1 = new PairList<String>();
         test1.addPair("1", "2");
         test1.addPair("3", "4");
@@ -68,13 +68,5 @@ public class Main {
         
         System.out.println(test1.getSize());
         System.out.println("--contains " + test1.contains(new Pair("3.1", "4.4")));
-        */
-        LinkedList<Integer> LL = new LinkedList<Integer>();
-        LL.addToEnd(1);
-        LL.addToEnd(2);
-        LL.addToEnd(3);
-        LL.addToEnd(4);
-        LL.addToEnd((Integer) LL.getNode(new Integer(3)).data);
-        LL.printList();
     }
 }

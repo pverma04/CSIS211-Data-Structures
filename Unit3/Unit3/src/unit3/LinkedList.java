@@ -246,17 +246,14 @@ public class LinkedList<T> {
     public Node getNode(int index){
         int indexCount = 0;
         Node p = this.head;
-        Node rv = new Node(null);
+        Node rv = null;
         while(p.next != null){
             if(indexCount == index){
-                //rv = p;
-                return p;
+                rv = p;
+                break;
             }
             p = p.next;
             indexCount++;
-        }
-        if(indexCount == index){
-            rv = p;
         }
         return rv;
     }
