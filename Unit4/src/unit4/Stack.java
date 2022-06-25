@@ -22,9 +22,9 @@ public class Stack<T> {
     
     public void pop(){
         if(!this.isEmpty()){
-            if(this.top==this.stackList.head){
-                top=null;
-                bottom=null;
+            if(this.top == this.stackList.head){
+                this.top = null;
+                this.bottom = null;
             }
             else{
                 this.top.prev.next = null;
@@ -53,7 +53,6 @@ public class Stack<T> {
         else{
             System.out.println("Empty Stack");
         }
-        
     }
     
     public boolean isEmpty(){
