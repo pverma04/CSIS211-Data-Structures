@@ -1,37 +1,62 @@
 
 package unit4;
 
-public class Stack<T>{
-    //data section
+
+public class Stack<T> {
     LinkedList<T> stackList;
-    int size; //more effecient to keep a size variable rather than calling this.stackList.getSize() each time
+    Node top;
+    Node bottom;
+    int size;
     
     public Stack(){
         this.stackList = new LinkedList<T>();
-        this.size = 0;
+        this.top = this.stackList.head;
+        this.bottom = this.stackList.tail;
+        size = 0;
     }
     public void push(T data){
         this.stackList.addToEnd(data);
-        this.size++;
+        top = this.stackList.tail;
+        size++;
     }
+    
     public void pop(){
-        if(size <= 1){
-            this.stackList.head = null;
+        if(!this.isEmpty()){
+            if(this.top==this.stackList.head){
+                top=null;
+                bottom=null;
+            }
+            else{
+                this.top.prev.next = null;
+                this.top = this.top.prev;
+            }
+            size--;
         }
-        else{
-            this.stackList.delete(this.size - 1);
-        }
-        size--;
     }
     public T peek(){
-        if(size != 0){
-            return (T) this.stackList.getNode(size - 1).data;
+        if(!isEmpty()){
+            return (T) this.top.data;
         }
-        return null;
+        else{
+            return null;
+        }
     }
-    public void print(){
-        this.stackList.printList();
+        
+    public void printStack(){
+        Node p = this.top;
+        if(!this.isEmpty()){
+            while(p != null){
+                System.out.println("" + p.data);
+                p = p.prev;
+            }
+        }
+        else{
+            System.out.println("Empty Stack");
+        }
         
     }
     
+    public boolean isEmpty(){
+        return this.size == 0;
+    }
 }
