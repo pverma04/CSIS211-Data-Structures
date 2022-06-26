@@ -16,7 +16,7 @@ public class Stack<T> {
     }
     public void push(T data){
         this.stackList.addToEnd(data);
-        top = this.stackList.tail;
+        this.top = this.stackList.tail;
         size++;
     }
     

@@ -1,97 +1,71 @@
-
 package unit4;
-
+import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        
-        System.out.println(revPolCalc("5 3 1 + *"));
-
+        System.out.println(isNumeric("1"));
+        System.out.println(revPolCalc("6 2 1 3 * + /"));
     }
     
-    public static Integer revPolCalc(String input) {
-        Stack<Integer> stk = new Stack<Integer>();
-        Integer firstInteger;
-        Integer secondInteger;
+    public static boolean isNumeric(String strNum) {
+    if (strNum == null) {
+        return false;
+    }
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
+    return true;
+}
+    
+    public static Double revPolCalc(String input) {
+        Stack<Double> stk = new Stack<Double>();
+        Double firstDouble;
+        Double secondDouble;
         
         for(String s : input.split("\\s+")){
-            switch (s) {
-                case "1":
-                    stk.push(1);
-                    break;
-                case "2":
-                    stk.push(2);
-                    break;
-                    
-                case "3":
-                    stk.push(3);
-                    break;
-                    
-                case "4":
-                    stk.push(4);
-                    break;
-                    
-                case "5":
-                    stk.push(5);
-                    break;
-                    
-                case "6":
-                    stk.push(6);
-                    break;
-                    
-                case "7":
-                    stk.push(7);
-                    break;
-                    
-                case "8":
-                    stk.push(8);
-                    break;
-                    
-                case "9":
-                    stk.push(9);
-                    break;
-                    
-                case "0":
-                    stk.push(0);
-                    break;
-                
-                case "+":
-                    secondInteger = stk.peek();
-                    stk.pop();
-                    firstInteger = stk.peek();
-                    stk.pop();
-                    stk.push(firstInteger + secondInteger);
-                    break;
-                    
-                case "-":
-                    secondInteger = stk.peek();
-                    stk.pop();
-                    firstInteger = stk.peek();
-                    stk.pop();
-                    stk.push(firstInteger - secondInteger);
-                    break;
-                    
-                case "*":
-                    secondInteger = stk.peek();
-                    stk.pop();
-                    firstInteger = stk.peek();
-                    stk.pop();
-                    stk.push(firstInteger * secondInteger);
-                    break;
-                    
-                case "/":
-                    secondInteger = stk.peek();
-                    stk.pop();
-                    firstInteger = stk.peek();
-                    stk.pop();
-                    stk.push(firstInteger / secondInteger);
-                    break;
-                    
-                default:
-                    throw new AssertionError();
+            
+                switch (s) {
+                    case "+":
+                        secondDouble = stk.peek();
+                        stk.pop();
+                        firstDouble = stk.peek();
+                        stk.pop();
+                        stk.push(firstDouble + secondDouble);
+                        break;
+
+                    case "-":
+                        secondDouble = stk.peek();
+                        stk.pop();
+                        firstDouble = stk.peek();
+                        stk.pop();
+                        stk.push(firstDouble - secondDouble);
+                        break;
+
+                    case "*":
+                        secondDouble = stk.peek();
+                        stk.pop();
+                        firstDouble = stk.peek();
+                        stk.pop();
+                        stk.push(firstDouble * secondDouble);
+                        break;
+
+                    case "/":
+                        secondDouble = stk.peek();
+                        stk.pop();
+                        firstDouble = stk.peek();
+                        stk.pop();
+                        stk.push(firstDouble / secondDouble);
+                        break;
+
+                    default:
+                    if(isNumeric(s)){
+                        stk.push((Double) Double.parseDouble(s));
+                    }
+                }
             }
-        }
-        return (Integer) stk.peek();
+        return (Double) stk.peek();
     }
     
 }
