@@ -27,8 +27,10 @@ public class Stack<T> {
                 this.bottom = null;
             }
             else{
-                this.top.prev.next = null;
-                this.top = this.top.prev;
+                this.stackList.tail.prev.next = null;
+                this.stackList.tail = this.stackList.tail.prev;
+                this.top = this.stackList.tail;
+                this.bottom = this.stackList.head;
             }
             size--;
         }
