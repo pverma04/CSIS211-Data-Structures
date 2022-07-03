@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         //System.out.println(revPolCalc("20 5 - 47 9  / +"));
-        System.out.println(inFixConversion("20.8 + 18.6 / 20.3"));
+        System.out.println(inFixConversion("( 20 + ( ( ( 10       / 5 ) ) )  * 70 )"));
     }
     
     /**
