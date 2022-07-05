@@ -27,5 +27,6 @@ public class MidTerm {
             }
         }
         System.out.println(sum);
+
     }   
 }
