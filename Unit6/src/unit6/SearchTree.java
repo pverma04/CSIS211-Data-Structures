@@ -1,19 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package unit6;
 
-/**
- *
- * @author parthverma
- */
 public class SearchTree<T extends Comparable<T>> {
     Node root;
     
     public SearchTree(){
         this.root = null;
     }
+    
     public SearchTree(Node root){
         this.root = root;
     }
@@ -22,7 +16,7 @@ public class SearchTree<T extends Comparable<T>> {
         this.insert(data, this.root);
     }
     
-    private void insert(T data, Node n){
+    protected void insert(T data, Node n){
         Node insertNode = new Node(data);
         if (this.root == null) {
             this.root = insertNode;
@@ -46,10 +40,9 @@ public class SearchTree<T extends Comparable<T>> {
     }
 
     private T findMin(Node n){
-        if(n.left == null){ //nothing to the left/smaller, return this node
+        if (n.left == null) { //nothing to the left/smaller, return this node
             return (T) n.data;
-        }
-        else{
+        } else {
             return this.findMin(n.left); //keep reccuring to the left for min value
         }
     }
@@ -71,20 +64,18 @@ public class SearchTree<T extends Comparable<T>> {
     }
 
     private Node remove(T data, Node n){
-        if(this.root == null){ //the tree is empty, return the null node n
+        if (n == null) { //the tree is empty, return the null node n
             return n;
         }
-        if(n != null){
-            if (data.compareTo((T) n.data) < 0) { //going to the left
-                n.left = this.remove(data, n.left); //since not found, recur down tree
-            } else if (data.compareTo((T) n.data) > 0) { //going to the right
-                n.right = this.remove(data, n.right); //since not found, recur down tree
-            } else if (n.left != null && n.right != null) {
-                n.data = findMin(n.right);
-                remove((T) n.data, n.right); //continue traversing
-            } else { //if data is not greater or less than n.data, delete this node
-                n = (n.left != null) ? n.left : n.right;
-            } 
+        if (data.compareTo((T) n.data) < 0) { //going to the left
+            n.left = this.remove(data, n.left); //since not found, recur down tree
+        } else if (data.compareTo((T) n.data) > 0) { //going to the right
+            n.right = this.remove(data, n.right); //since not found, recur down tree
+        } else if (n.left != null && n.right != null) {
+            n.data = findMin(n.right);
+            remove((T) n.data, n.right); //continue traversing
+        } else { //if data is not greater or less than n.data, delete this node
+            n = (n.left != null) ? n.left : n.right;
         }
         return n;
     }
@@ -93,17 +84,14 @@ public class SearchTree<T extends Comparable<T>> {
         return this.contains(data, this.root);
     }
     
-    private boolean contains(T data, Node n){
-        if(n == null){ //if empty, nothing in tree
+    private boolean contains(T data, Node n) {
+        if (n == null) { //if empty, nothing in tree
             return false;
-        }
-        else if(data.compareTo((T) n.data) < 0){ //to the left
+        } else if (data.compareTo((T) n.data) < 0) { //to the left
             return contains(data, n.left);
-        }
-        else if(data.compareTo((T) n.data) > 0){ //to the right
+        } else if (data.compareTo((T) n.data) > 0) { //to the right
             return contains(data, n.right);
-        }
-        else{ //data has been found
+        } else { //data has been found
             return true;
         }
     }
@@ -117,7 +105,7 @@ public class SearchTree<T extends Comparable<T>> {
     }
     
     private void printTree(Node n){
-        if(n != null){ //if tree isnt empty
+        if (n != null) { //if tree isnt empty
             System.out.println(n.data);
             this.printTree(n.left); //traverse through left
             this.printTree(n.right); //traverse through right

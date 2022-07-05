@@ -11,26 +11,22 @@ package unit6;
 public class Main {
 
     public static void main(String[] args) {
-        SearchTree<Integer> st = new SearchTree();
-        st.insert(10);
-        st.insert(15);
-        st.insert(20);
-        st.insert(12);
-        st.insert(25);
-        if (st.contains(20)) {
-            System.out.println("Found");
-        } else {
-            System.out.println("Not Found");
-        }
-        st.printTree();
-        System.out.println("Remove Node\n");
-        st.remove(300);
-        st.printTree();
+        
+        AvlTree<Integer> avl = new AvlTree();
+        avl.insert(23);
+        avl.insert(18);
+        avl.insert(44);
+        avl.insert(6);
+        avl.insert(12);
+        avl.insert(52);
+        avl.insert(14);
+        avl.insert(8);
 
-        if (st.contains(20))
-            System.out.println("Found");
-        else
-            System.out.println("Not Found");
+        avl.printTree();
+        System.out.println("After Remove");
+
+        avl.remove(52);
+        avl.printTree();
     }
     
 }
