@@ -163,7 +163,7 @@ public class AvlTree<T extends Comparable<T>>{
 
     private void printTree(AvlNode n) {
         if (n != null) { //if tree isnt empty
-            System.out.println(n.data);
+            System.out.println(n.data + "--count: " + n.count);
             this.printTree(n.left); //traverse through left
             this.printTree(n.right); //traverse through right
         }

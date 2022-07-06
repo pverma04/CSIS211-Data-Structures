@@ -1,25 +1,36 @@
-
 package unit6;
 
 import java.io.FileReader;
 import java.util.Scanner;
 import java.io.*;
+import java.nio.file.*;
 
 public class WordCount<T> extends AvlTree {
     File f;
-    Scanner input;
+    //Scanner input;
+    String fileContent;
     
     public WordCount(String filename){
         this.f = new File(filename);
+        Path p = Paths.get(System.getProperty("user.dir") + "/" + this.f);
         try{
-            this.input = new Scanner(f);
-        } catch(FileNotFoundException ex) {
+            this.fileContent = Files.readString(p);
+        } catch (IOException exc){
+            System.out.println("wrong path");
             return;
         }
     }
+    public String removePunctuations(String source) {
+        System.out.println(source);
+        String rv = source.replaceAll("[\\p{P}&&[^\u0027]]", " "); //remove all punctation in the string aside from apostrophe
+        rv = rv.replaceAll("'", ""); //at every instance of an apostrophe with an empty space
+        return rv;
+    }
     
-    public void count() throws IOException{
+    public void print() throws IOException{
+        /*
         try {
+           
             System.out.println((System.getProperty("user.dir") + "/" + this.f));
             StreamTokenizer t = new StreamTokenizer(new BufferedReader(new InputStreamReader(new FileInputStream((System.getProperty("user.dir") + "/" + this.f)))));
             
@@ -36,10 +47,20 @@ public class WordCount<T> extends AvlTree {
                 super.insert((Comparable) t.sval);
             }
             super.printTree();
+            
         } catch (FileNotFoundException ex) {
             System.out.println("not found");
             return;
         }
+        */
+        
+        String textWOPunct = removePunctuations(this.fileContent);
+        System.out.println(textWOPunct);
+        String[] arrWords = textWOPunct.split("\\s+");
+        for(String s : arrWords){
+            super.insert((Comparable) s);
+        }
+        super.printTree();
     }
     
 }

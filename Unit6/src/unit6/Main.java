@@ -15,7 +15,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         
         WordCount w = new WordCount("wordCountTest.txt");
-        w.count();
+        w.print();
     }
-    
 }
