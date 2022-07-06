@@ -122,6 +122,8 @@ public class AvlTree<T extends Comparable<T>>{
             n.left = insert(data, n.left); //keep traversing to the left
         } else if (data.compareTo((T) n.data) > 0) { //traverse right
             n.right = insert(data, n.right); //keep traversing to the right
+        } else if (data.compareTo((T) n.data) == 0){ //if it already exists
+            n.count++;
         }
         updateHeight(n);
         return balance(n); //if data already exists in a node in the tree, leave the tree unchanged. Otherwise balance and return the root
@@ -148,6 +150,8 @@ public class AvlTree<T extends Comparable<T>>{
         
         if (n == null) { //if data wasn't found, n is null
             return null;
+        } else { //if it was found
+            n.count--;
         }
         this.updateHeight(n);
         return this.balance(n);
