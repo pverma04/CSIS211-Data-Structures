@@ -1,7 +1,7 @@
 
 package unit6;
 
-public class AvlTree<T extends Comparable<T>> extends SearchTree<T>{
+public class AvlTree<T extends Comparable<T>>{
     AvlNode root;
     private static final int ALLOWED_IMBALANCE = 1;
     
@@ -22,7 +22,7 @@ public class AvlTree<T extends Comparable<T>> extends SearchTree<T>{
     }
 
     private int balanceDiff(AvlNode n) {
-        return this.height(n.right) - this.height(n.left); //if this number is > 1, right heavy. If < 1 left heavy
+        return this.height(n.left) - this.height(n.right); //> 1 means left heavy, < -1 means right heavy
     }
     
     //MIN AND MAX (public then private method)
@@ -90,22 +90,21 @@ public class AvlTree<T extends Comparable<T>> extends SearchTree<T>{
     private AvlNode balance(AvlNode n) {
         int factor = balanceDiff(n);
         
-        if (factor > 1) { //right heavy
-            if (balanceDiff(n.left) <= 0) { //normal rotation
-                //rotate to the right
-                n = rotateR(n);
-            } else { //left side is right heavy, left-right rotation
+        if(factor > 1){ //left heavy
+            if(balanceDiff(n.left) < -1){ //n.left is right heavy
                 n.left = rotateL(n.left);
                 n = rotateR(n);
             }
+            else{ //regular rotation
+                n = rotateR(n); //left heavy, rotate to the right
+            }
         }
-        if (factor < -1) { //left heavy
-            if (balanceDiff(n.right) >= 0) { //normal rotation
-                //rotate to the left
-                n = rotateL(n);
-            } else { //right side is left heavy, right-left rotation
+        else if (factor < -1) { //right heavy
+            if (balanceDiff(n.right) > 1) { //n.right is left heavy
                 n.right = rotateR(n.right);
                 n = rotateL(n);
+            } else { //regular rotation
+                n = rotateL(n); //right heavy, rotate to the left
             }
         }
         return n;
@@ -154,5 +153,15 @@ public class AvlTree<T extends Comparable<T>> extends SearchTree<T>{
         return this.balance(n);
     }
    
-    
+    public void printTree() {
+        this.printTree(this.root);
+    }
+
+    private void printTree(AvlNode n) {
+        if (n != null) { //if tree isnt empty
+            System.out.println(n.data);
+            this.printTree(n.left); //traverse through left
+            this.printTree(n.right); //traverse through right
+        }
+    }
 }

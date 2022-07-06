@@ -23,9 +23,14 @@ public class Main {
         avl.insert(8);
 
         avl.printTree();
+        System.out.println("After Remove 1");
+
+        //avl.remove(52);
+        avl.printTree();
+        
         System.out.println("After Remove");
 
-        avl.remove(52);
+        //avl.remove(12);
         avl.printTree();
     }
     
