@@ -9,10 +9,10 @@ public class AvlNode<T> {
     int height;
     int count;
     
-    public AvlNode(T data){
+    public AvlNode(T data, AvlNode l, AvlNode r){
         this.data = data;
-        this.left = null;
-        this.right = null;
+        this.left = l;
+        this.right = r;
         this.count = 1;
     }
 }

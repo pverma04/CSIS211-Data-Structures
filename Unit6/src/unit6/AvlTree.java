@@ -12,104 +12,106 @@ public class AvlTree<T extends Comparable<T>>{
     //HELPER METHODS
     
     private void updateHeight(AvlNode n) {
-        int lCHeight = this.height(n.left); //height of left CHILD
-        int rCHeight = this.height(n.right); //height of right CHILD
-        n.height = Math.max(lCHeight, rCHeight) + 1; //whichever child height is higher, and add one for the root node
+       n.height = Math.max(height(n.left), height(n.right)) + 1; //whichever child height is higher, and add one for the root node
     }
 
     private int height(AvlNode n) {
         return n == null ? -1 : n.height;
     }
-
+    /*
     private int balanceDiff(AvlNode n) {
-        return this.height(n.left) - this.height(n.right); //> 1 means left heavy, < -1 means right heavy
+        if (n != null) {
+            return this.height(n.left) - this.height(n.right); //> 1 means left heavy, < -1 means right heavy
+        } else {
+            //return -1;
+            return 0;
+        }
+        //return (n == null) ? 0 : height(n.left) - height(n.right);
+    }
+    */
+    int getBalance(AvlNode n) {
+        return (n == null) ? 0 : height(n.left) - height(n.right);
     }
     
     //MIN AND MAX (public then private method)
-    public T findMin() {
-        return (T) this.findMin(this.root);
+    public AvlNode findMin() {
+        return this.findMin(this.root);
     }
 
-    private T findMin(AvlNode n) {
+    private AvlNode findMin(AvlNode n) {
         if (n.left == null) { //nothing to the left/smaller, return this node
-            return (T) n.data;
+            return n    ;
         } else {
             return this.findMin(n.left); //keep reccuring to the left for min value
         }
     }
 
-    public T findMax() {
-        return (T) this.findMin(this.root);
+    public AvlNode findMax() {
+        return this.findMax(this.root);
     }
 
-    private T findMax(AvlNode n) {
+    private AvlNode findMax(AvlNode n) {
         if (n.right == null) { //nothing to the right/bigger, return this node
-            return (T) n.data;
+            return n;
         } else {
-            return this.findMin(n.right); //keep reccuring to the right for max value
+            return this.findMax(n.right); //keep reccuring to the right for max value
         }
     }
 
     //ROTATION AND BALANCE (public then private method)
-    public void rotateR(){
+    /*public void rotateR(){
         this.root = this.rotateR(this.root);
-    }
+    }*/
     
     private AvlNode rotateR(AvlNode n) { //the imbalance begins at Node n and is left heavy
-        AvlNode lChild = n.left;
-
-        n.left = lChild.right;
-        lChild.right = n; //sets lChild as the root
-
-        this.updateHeight(n);
-        this.updateHeight(lChild);
-
-        return lChild; //after rotation returns the root
+        AvlNode x = n.left;
+        AvlNode y = x.right;
+        x.right = n;
+        n.left = y;
+        updateHeight(n);
+        updateHeight(x);
+        return x;
     }
 
-    public void rotateL() {
+    /*public void rotateL() {
         this.root = this.rotateL(this.root);
     }
+    */
+    
     
     private AvlNode rotateL(AvlNode n) { //the imbalance begins at Node n and is left heavy //works opposite as rotateR
-        AvlNode rChild = n.right;
-
-        n.right = rChild.left;
-        rChild.left = n; //sets lChild as the root
-
-        this.updateHeight(n);
-        this.updateHeight(rChild);
-
-        return rChild; //after rotation returns the root
+        AvlNode x = n.right;
+        AvlNode y = x.left;
+        x.left = n;
+        n.right = y;
+        updateHeight(n);
+        updateHeight(x);
+        return x;
     }
     
-    public void balance(){
-        this.root = this.balance(this.root);
-    }
     
-    private AvlNode balance(AvlNode n) {
-        int factor = balanceDiff(n);
-        
-        if(factor > 1){ //left heavy
-            if(balanceDiff(n.left) < -1){ //n.left is right heavy
-                n.left = rotateL(n.left);
-                n = rotateR(n);
+    private AvlNode rebalance(AvlNode z) {
+        updateHeight(z);
+        int balance = getBalance(z);
+        if (balance < -1) {
+            if (height(z.right.right) > height(z.right.left)) {
+                z = rotateL(z);
+            } else {
+                z.right = rotateR(z.right);
+                z = rotateL(z);
             }
-            else{ //regular rotation
-                n = rotateR(n); //left heavy, rotate to the right
-            }
-        }
-        else if (factor < -1) { //right heavy
-            if (balanceDiff(n.right) > 1) { //n.right is left heavy
-                n.right = rotateR(n.right);
-                n = rotateL(n);
-            } else { //regular rotation
-                n = rotateL(n); //right heavy, rotate to the left
+        } else if (balance > 1) {
+            if (height(z.left.left) > height(z.left.right)) {
+                z = rotateR(z);
+            } else {
+                z.left = rotateL(z.left);
+                z = rotateR(z);
             }
         }
-        return n;
+        return z;
     }
-    
+
+
     //INSERT AND REMOVE (public then private method)
     public void insert(T data) {
         this.root = this.insert(data, this.root);
@@ -117,16 +119,45 @@ public class AvlTree<T extends Comparable<T>>{
 
     private AvlNode insert(T data, AvlNode n) {
         if (n == null) {
-            n = new AvlNode(data, null, null);
+            return new AvlNode(data);
         } else if (data.compareTo((T) n.data) < 0) { //traverse left
             n.left = insert(data, n.left); //keep traversing to the left
         } else if (data.compareTo((T) n.data) > 0) { //traverse right
             n.right = insert(data, n.right); //keep traversing to the right
         } else if (data.compareTo((T) n.data) == 0){ //if it already exists
             n.count++;
-        }
+            return n;
+        } 
+        
         updateHeight(n);
-        return balance(n); //if data already exists in a node in the tree, leave the tree unchanged. Otherwise balance and return the root
+        /*
+        int factor = balanceDiff(n);
+        // If this node becomes unbalanced, then there are 4 cases Left Left Case
+        if (factor > 1 && data.compareTo((T)n.left.data) < 0) {
+            return rotateR(n);
+        }
+
+        // Right Right Case
+        if (factor < -1 && data.compareTo((T) n.right.data) > 0) {
+            return rotateL(n);
+        }
+
+        // Left Right Case
+        if (factor > 1 && data.compareTo((T) n.left.data) > 0) {
+            n.left = rotateL(n.left);
+            return rotateR(n);
+        }
+
+        // Right Left Case
+        if (factor < -1 && data.compareTo((T) n.right.data) < 0) {
+            n.right = rotateR(n.right);
+            return rotateL(n);
+        }
+
+        // return the (unchanged) node pointer 
+        return n;
+       */
+        return rebalance(n); //if data already exists in a node in the tree, leave the tree unchanged. Otherwise balance and return the root
     }
     
     public void remove(T data){
@@ -141,31 +172,89 @@ public class AvlTree<T extends Comparable<T>>{
             n.left = this.remove(data, n.left); //since not found, recur down tree
         } else if (data.compareTo((T) n.data) > 0) { //going to the right
             n.right = this.remove(data, n.right); //since not found, recur down tree
-        } else if (n.left != null && n.right != null) { //n has now been set to the node that needs to be deleted, or there it doesn't exist
-            n.data = findMin(n.right);
-            remove((T) n.data, n.right); //continue traversing
-        } else { //if data is not greater or less than n.data, delete this node
-            n = (n.left != null) ? n.left : n.right;
+        } else {
+            // node with only one child or no child
+            if ((n.left == null) || (n.right == null)) {
+                AvlNode temp = null;
+                if (temp == n.left) {
+                    temp = n.right;
+                } else {
+                    temp = n.left;
+                }
+
+                // No child case
+                if (temp == null) {
+                    temp = n;
+                    n = null;
+                } else { // One child case
+                    n = temp; // Copy the contents of the non-empty child
+                }                               
+            } else {
+
+                // node with two children: Get the inorder
+                // successor (smallest in the right subtree)
+                AvlNode temp = findMin(n.right);
+
+                // Copy the inorder successor's data to this node
+                n.data = temp.data;
+
+                // Delete the inorder successor
+                n.right = remove((T) temp.data, n.right);
+            }
         }
-        
-        if (n == null) { //if data wasn't found, n is null
-            return null;
-        } else { //if it was found
-            n.count--;
+        // If the tree had only one node then return
+        if (n == null) {
+            return n;
         }
-        this.updateHeight(n);
-        return this.balance(n);
+
+        // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+        n.height = Math.max(height(n.left), height(n.right)) + 1;
+
+        // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
+        // this node became unbalanced)
+        int balance = getBalance(n);
+
+        // If this node becomes unbalanced, then there are 4 cases
+        // Left Left Case
+        if (balance > 1 && getBalance(n.left) >= 0) {
+            return rotateR(n);
+        }
+
+        // Left Right Case
+        if (balance > 1 && getBalance(n.left) < 0) {
+            n.left = rotateL(n.left);
+            return rotateR(n);
+        }
+
+        // Right Right Case
+        if (balance < -1 && getBalance(n.right) <= 0) {
+            return rotateL(n);
+        }
+
+        // Right Left Case
+        if (balance < -1 && getBalance(n.right) > 0) {
+            n.right = rotateR(n.right);
+            return rotateL(n);
+        }
+
+        //return root;
+        return n;
     }
    
     public void printTree() {
+        System.out.println("root="+this.root.data);
+                //n.data + " count " + n.count + " height " + n.height + " left: " + (n.left == null ? "null" : n.left.data) + " right: " + (n.right == null ? "null" : n.right.data));
+        
         this.printTree(this.root);
     }
 
     private void printTree(AvlNode n) {
         if (n != null) { //if tree isnt empty
-            System.out.println(n.data + "--count: " + n.count);
+            System.out.println(n.data + " count " + n.count + " height " + n.height + " left: " + (n.left == null ? "null" : n.left.data) + " right: " + (n.right == null ? "null" : n.right.data));
+
             this.printTree(n.left); //traverse through left
             this.printTree(n.right); //traverse through right
         }
+        //System.out.println("min " + findMin(this.root));
     }
 }

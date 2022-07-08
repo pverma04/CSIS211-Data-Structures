@@ -20,7 +20,7 @@ public class WordCount<T> extends AvlTree {
             return;
         }
     }
-    public String removePunctuations(String source) {
+    private String removePunctuations(String source) {
         System.out.println(source);
         String rv = source.replaceAll("[\\p{P}&&[^\u0027]]", " "); //remove all punctation in the string aside from apostrophe
         rv = rv.replaceAll("'", ""); //at every instance of an apostrophe with an empty space

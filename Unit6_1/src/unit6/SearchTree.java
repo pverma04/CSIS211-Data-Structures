@@ -5,35 +5,44 @@ public class SearchTree<T extends Comparable<T>> {
     Node root;
     
     public SearchTree(){
-        this.root = null;
+        this(null);
     }
     
     public SearchTree(Node root){
         this.root = root;
     }
     
-    public void insert(T data){
-        this.insert(data, this.root);
+    
+    protected void updateHeight(Node n) {
+        int lCHeight = this.height(n.left); //height of left CHILD
+        int rCHeight = this.height(n.right); //height of right CHILD
+        n.height = Math.max(lCHeight, rCHeight) + 1; //whichever child height is higher, and add one for the root node
+    }
+
+    protected int height(Node n) {
+        return n == null ? -1 : n.height;
     }
     
-    protected Node insert(T data, Node n){
-        Node insertNode = new Node(data);
-        if (this.root == null) {
-            this.root = insertNode;
-        } else if (data.compareTo((T) n.data) < 0) { //going to the left
-            if (n.left == null) {
-                n.left = insertNode;
-            } else {
-                insert(data, n.left);
-            }
-        } else if (data.compareTo((T) n.data) > 0) { //going to the right
-            if (n.right == null) {
-                n.right = insertNode;
-            } else {
-                insert(data, n.right);
-            }
-        } 
-        return (n);
+    
+    public void insert(T data) {
+        this.root = this.insert(data, this.root);
+    }
+
+    private Node insert(T data, Node n) {
+
+        if (n == null) {
+            n = new Node(data);
+        } else if (data.compareTo((T) n.data) < 0) { //traverse left
+            n.left = insert(data, n.left); //keep traversing to the left
+        } else if (data.compareTo((T) n.data) > 0) { //traverse right
+            n.right = insert(data, n.right); //keep traversing to the right
+        } else if (data.compareTo((T) n.data) == 0) { //if it already exists
+            n.count++;
+        }
+
+        //n = this.insert(data, this.root);
+        updateHeight(n);
+        return (n); //if data already exists in a node in the tree, leave the tree unchanged. Otherwise balance and return the root
     }
     
     public T findMin() {
@@ -107,10 +116,7 @@ public class SearchTree<T extends Comparable<T>> {
     
     private void printTree(Node n){
         if (n != null) { //if tree isnt empty
-            System.out.println(n.data + " left: " +  (n.left == null ? "null" :  n.left.data) + " right: " + (n.right == null ? "null": n.right.data));
-            
-            System.out.println("-------------------");
-            
+            System.out.println(n.data + " count: " + n.count + " height: " + n.height);
             this.printTree(n.left); //traverse through left
             this.printTree(n.right); //traverse through right
         }
