@@ -8,6 +8,18 @@ package unit6.pkg1;
  *
  * @author parthverma
  */
-public class Node {
-    
+public class Node<T> {
+
+    T data;
+
+    Node left;
+    Node right;
+
+    public Node() {
+        this(null);
+    }
+
+    public Node(T data) {
+        this.data = data;
+    }
 }

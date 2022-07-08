@@ -4,6 +4,8 @@
  */
 package unit6.pkg1;
 
+import java.io.IOException;
+
 /**
  *
  * @author parthverma
@@ -14,19 +16,21 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        /*
         AvlTree tree = new AvlTree();
 
-        /* Constructing tree given in the above figure */
-        tree.root = tree.insert(tree.root, 9);
-        tree.root = tree.insert(tree.root, 5);
-        tree.root = tree.insert(tree.root, 10);
-        tree.root = tree.insert(tree.root, 0);
-        tree.root = tree.insert(tree.root, 6);
-        tree.root = tree.insert(tree.root, 11);
-        tree.root = tree.insert(tree.root, -1);
-        tree.root = tree.insert(tree.root, 1);
-        tree.root = tree.insert(tree.root, 2);
-
+        /* Constructing tree given in the above figure 
+        
+        tree.insert(9);
+        tree.insert(5);
+        tree.insert(10);
+        tree.insert(0);
+        tree.insert(6);
+        tree.insert(11);
+        tree.insert(-1);
+        tree.insert(1);
+        tree.insert(2);
+        */
         /* The constructed AVL Tree would be
         9
         / \
@@ -36,13 +40,14 @@ public class Main {
         / / \
         -1 2 6
          */
+        /*
         System.out.println("Preorder traversal of "
                 + "constructed tree is : ");
         tree.printTree();
-
-        tree.root = tree.deleteNode(tree.root, 10);
-        tree.root = tree.deleteNode(tree.root, 6);
-
+        
+        tree.deleteNode(10);
+        tree.deleteNode(6);
+        */
         /* The AVL Tree after deletion of 10
         1
         / \
@@ -52,12 +57,21 @@ public class Main {
         / \
         2 6
          */
+        /*
         System.out.println("");
         System.out.println("Preorder traversal after "
                 + "deletion of 10 :");
         tree.printTree();
-        tree.root = tree.insert(tree.root, 8);
+        tree.insert(8);
         tree.printTree();
+        */
+        WordCount w = new WordCount("wordCountTest.txt");
+        try{
+            w.printData();
+        } catch (IOException ex){
+            System.out.println("file not found");
+            return;
+        }
     }
     
 }

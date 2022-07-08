@@ -47,7 +47,10 @@ public class AvlTree <T extends Comparable<T>> {
         return (n == null) ? 0 : height(n.left) - height(n.right);
     }
     
-    public AvlNode insert(AvlNode n, T data) {
+    public void insert(T data) {
+        this.root = this.insert(this.root, data);
+    }
+    private AvlNode insert(AvlNode n, T data) {
         /* 1. Perform the normal BST rotation */
         if (n == null) {
             return (new AvlNode(data));
@@ -109,8 +112,22 @@ public class AvlTree <T extends Comparable<T>> {
 
         return current;
     }
+    private AvlNode maxValueNode(AvlNode n) {
+        AvlNode current = n;
+
+        /* loop down to find the leftmost leaf */
+        while (current.right != null) {
+            current = current.right;
+        }
+
+        return current;
+    }
     
-    public AvlNode deleteNode(AvlNode n, T data) {
+    public void deleteNode(T data) {
+        this.root = this.deleteNode(this.root, data);
+    }
+    
+    private AvlNode deleteNode(AvlNode n, T data) {
         // STEP 1: PERFORM STANDARD BST DELETE
         if (n == null) {
             return n;
@@ -213,4 +230,28 @@ public class AvlTree <T extends Comparable<T>> {
         }
         //System.out.println("min " + findMin(this.root));
     }
+    
+    public boolean contains(AvlNode n, T data) {
+        if (n != null) {
+            while(n != null) {
+                if (data.compareTo((T) n.data) > 0) { //data is less than current n.data
+                    n = n.right;
+                } else if (data.compareTo((T) n.data) < 0) { //data is greater than current n.data
+                    n = n.left;
+                } else { //data is equal to current n.data
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean isTreeEmpty() {
+        return this.root == null;
+    }
+    
+    public void makeEmpty() {
+        this.root = null;
+    }
+    
 }
