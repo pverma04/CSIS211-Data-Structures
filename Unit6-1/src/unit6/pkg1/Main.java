@@ -16,10 +16,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*
+        
         AvlTree tree = new AvlTree();
 
-        /* Constructing tree given in the above figure 
         
         tree.insert(9);
         tree.insert(5);
@@ -30,7 +29,6 @@ public class Main {
         tree.insert(-1);
         tree.insert(1);
         tree.insert(2);
-        */
         /* The constructed AVL Tree would be
         9
         / \
@@ -40,31 +38,21 @@ public class Main {
         / / \
         -1 2 6
          */
-        /*
+        
         System.out.println("Preorder traversal of "
                 + "constructed tree is : ");
         tree.printTree();
         
         tree.deleteNode(10);
         tree.deleteNode(6);
-        */
-        /* The AVL Tree after deletion of 10
-        1
-        / \
-        0 9
-        /     / \
-        -1 5 11
-        / \
-        2 6
-         */
-        /*
+        
         System.out.println("");
         System.out.println("Preorder traversal after "
                 + "deletion of 10 :");
         tree.printTree();
         tree.insert(8);
         tree.printTree();
-        */
+        
         WordCount w = new WordCount("wordCountTest.txt");
         try{
             w.printData();

@@ -8,119 +8,88 @@ public class AvlTree <T extends Comparable<T>> {
         return (n == null) ? 0 : n.height;
     }
     
+    private void updateHeight(AvlNode n) {
+        n.height = Math.max(height(n.left), height(n.right)) +1; //max of right and left is the height (add one to account for the root node as well)
+    }
+    
     private int max(int a, int b) {
         return (a > b) ? a : b;
     }
-    private AvlNode rightRotate(AvlNode b) {
-        AvlNode a = b.left;
-        AvlNode subT = a.right;
-
-        // Perform rotation
-        a.right = b;
-        b.left = subT;
-
-        // Update heights
-        b.height = max(height(b.left), height(b.right)) + 1;
+    private AvlNode rightRotate(AvlNode a) {
+        AvlNode b = a.left; //to become the new root
+        AvlNode subT = b.right; //everything to follow (T2 will represent the "root") that will be carried in the same position
+        b.right = a; //switching
+        a.left = subT; //switching
         a.height = max(height(a.left), height(a.right)) + 1;
+        b.height = max(height(b.left), height(b.right)) + 1;
 
-        // Return new root
-        return a;
+        return b; //the new root
     }
     
     private AvlNode leftRotate(AvlNode a) {
-        AvlNode b = a.right;
-        AvlNode T2 = b.left;
-
-        // Perform rotation
-        b.left = a;
-        a.right = T2;
-
-        // Update heights
+        AvlNode b = a.right; //to become the new root
+        AvlNode T2 = b.left; //everything to follow (T2 will represent the "root") that will be carried in the same position
+        b.left = a; //switching
+        a.right = T2; //switching
         a.height = max(height(a.left), height(a.right)) + 1;
         b.height = max(height(b.left), height(b.right)) + 1;
 
-        // Return new root
-        return b;
+        return b; //the new root
     }
     
     private int getBalance(AvlNode n) {
-        return (n == null) ? 0 : height(n.left) - height(n.right);
+        return (n == null) ? 0 : height(n.left) - height(n.right); //left - right for height
     }
     
     public void insert(T data) {
         this.root = this.insert(this.root, data);
     }
+    
     private AvlNode insert(AvlNode n, T data) {
-        /* 1. Perform the normal BST rotation */
-        if (n == null) {
+        if (n == null) { //new AvlNode is the only node in the list, just retunn that as the root
             return (new AvlNode(data));
-        }
-
-        if (data.compareTo((T) n.data) < 0) {
-            n.left = insert(n.left, data);
-        } else if (data.compareTo((T) n.data) > 0) {
-            n.right = insert(n.right, data);
-        } else // Equal datas not allowed
-        {
+        } else if (data.compareTo((T) n.data) < 0) { //going to the left
+            n.left = insert(n.left, data); //recurse
+        } else if (data.compareTo((T) n.data) > 0) { //going to the right
+            n.right = insert(n.right, data); //recurse
+        } else { //if the data already exists in an AvlNode, don't add it. Return the original root, but update the count of the node
             n.count++;
             return n;
         }
-
-        /* 2. Update height of this ancestor node */
-        n.height = 1 + max(height(n.left),
-                height(n.right));
-
-        /* 3. Get the balance factor of this ancestor
-        node to check whether this node became
-        unbalanced */
-        int treeBal = getBalance(n);
-
-        // If this node becomes unbalanced, then
-        // there are 4 cases Left Left Case
-        if (treeBal > 1 && data.compareTo((T) n.left.data) < 0) {
+        updateHeight(n);
+        
+        int bal = getBalance(n);
+        
+        if (bal > 1 && data.compareTo((T) n.left.data) < 0) { //left case
             return rightRotate(n);
-        }
-
-        // Right Right Case
-        if (treeBal < -1 && data.compareTo((T) n.right.data) > 0) {
+        } if (bal < -1 && data.compareTo((T) n.right.data) > 0) { //right case
             return leftRotate(n);
-        }
-
-        // Left Right Case
-        if (treeBal > 1 && data.compareTo((T) n.left.data) > 0) {
+        } if (bal > 1 && data.compareTo((T) n.left.data) > 0) { //left-right case
             n.left = leftRotate(n.left);
             return rightRotate(n);
-        }
-
-        // Right Left Case
-        if (treeBal < -1 && data.compareTo((T) n.right.data) < 0) {
+        } if (bal < -1 && data.compareTo((T) n.right.data) < 0) { //right-left case
             n.right = rightRotate(n.right);
             return leftRotate(n);
+        } else { //if tree was already balanced
+            return n;
         }
-
-        /* return the (unchanged) node pointer */
-        return n;
     }
     
     private AvlNode minValueNode(AvlNode n) {
-        AvlNode current = n;
-
-        /* loop down to find the leftmost leaf */
-        while (current.left != null) {
-            current = current.left;
+        AvlNode r = n; //reference node
+        while (r.left != null) { //traverse left side to find smallest data
+            r = r.left;
         }
-
-        return current;
+        return r;
     }
+    
     private AvlNode maxValueNode(AvlNode n) {
-        AvlNode current = n;
+        AvlNode r = n; //reference node
 
-        /* loop down to find the leftmost leaf */
-        while (current.right != null) {
-            current = current.right;
+        while (r.right != null) { //traverse right side to find greatest data
+            r = r.right;
         }
-
-        return current;
+        return r;
     }
     
     public void deleteNode(T data) {
@@ -128,107 +97,74 @@ public class AvlTree <T extends Comparable<T>> {
     }
     
     private AvlNode deleteNode(AvlNode n, T data) {
-        // STEP 1: PERFORM STANDARD BST DELETE
-        if (n == null) {
+        if (n == null) { //if null then empty tree, return null
             return n;
-        }
-
-        // If the key to be deleted is smaller than
-        // the root's key, then it lies in left subtree
-        if (data.compareTo((T) n.data) < 0) {
+        } else if (data.compareTo((T) n.data) < 0) { //go down left side
             n.left = deleteNode(n.left, data);
-        } // If the key to be deleted is greater than the
-        // root's key, then it lies in right subtree
-        else if (data.compareTo((T) n.data) > 0) {
+        } else if (data.compareTo((T) n.data) > 0) { //go down right side
             n.right = deleteNode(n.right, data);
-        } // if key is same as root's key, then this is the node
-        // to be deleted
-        else {
-
-            // node with only one child or no child
-            if ((n.left == null) || (n.right == null)) {
+        } else { //if not greater or less than data, we have found the node to be deleted
+            if ((n.left == null) || (n.right == null)) { //one or no children
                 AvlNode temp = null;
-                if (temp == n.left) {
+
+                if (temp == n.left) { //determine node to hold as temp
                     temp = n.right;
                 } else {
                     temp = n.left;
                 }
 
-                // No child case
-                if (temp == null) {
+                if (temp == null) { //if no children
                     temp = n;
                     n = null;
-                } else // One child case
-                {
-                    n = temp; // Copy the contents of
-                }                                // the non-empty child
-            } else {
-
-                // node with two children: Get the inorder
-                // successor (smallest in the right subtree)
+                } else { //for one child case, set root node = temp
+                    n = temp;
+                }
+            } else { //2 children
                 AvlNode temp = minValueNode(n.right);
-
-                // Copy the inorder successor's data to this node
                 n.data = temp.data;
-
-                // Delete the inorder successor
                 n.right = deleteNode(n.right, (T) temp.data);
             }
         }
 
-        // If the tree had only one node then return
-        if (n == null) {
+        if (n == null) { //if tree root was null, there is nothing to delete (root stays null and unchanged)
             return n;
         }
 
-        // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
-        n.height = max(height(n.left), height(n.right)) + 1;
+        updateHeight(n);
+        int bal = getBalance(n);
 
-        // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
-        // this node became unbalanced)
-        int balance = getBalance(n);
-
-        // If this node becomes unbalanced, then there are 4 cases
-        // Left Left Case
-        if (balance > 1 && getBalance(n.left) >= 0) {
+        if (bal > 1 && getBalance(n.left) >= 0) { //left case
             return rightRotate(n);
         }
-
-        // Left Right Case
-        if (balance > 1 && getBalance(n.left) < 0) {
+        if (bal < -1 && getBalance(n.right) <= 0) { //right case
+            return leftRotate(n);
+        }
+        if (bal > 1 && getBalance(n.left) < 0) { //left-right case
             n.left = leftRotate(n.left);
             return rightRotate(n);
         }
-
-        // Right Right Case
-        if (balance < -1 && getBalance(n.right) <= 0) {
-            return leftRotate(n);
-        }
-
-        // Right Left Case
-        if (balance < -1 && getBalance(n.right) > 0) {
+        if (bal < -1 && getBalance(n.right) > 0) { //right-right case
             n.right = rightRotate(n.right);
             return leftRotate(n);
+        } else { //if tree is balanced already
+            return n;
         }
-
-        return n;
     }
     
     public void printTree() {
-        System.out.println("root=" + this.root.data);
-        //n.data + " count " + n.count + " height " + n.height + " left: " + (n.left == null ? "null" : n.left.data) + " right: " + (n.right == null ? "null" : n.right.data));
-
+        System.out.println("root = " + this.root.data);
         this.printTree(this.root);
     }
 
     private void printTree(AvlNode n) {
         if (n != null) { //if tree isnt empty
+            System.out.println(n.data);
+            /* print with additional funcationality
             System.out.println(n.data + " count " + n.count + " height " + n.height + " left: " + (n.left == null ? "null" : n.left.data) + " right: " + (n.right == null ? "null" : n.right.data));
-
+            */
             this.printTree(n.left); //traverse through left
             this.printTree(n.right); //traverse through right
         }
-        //System.out.println("min " + findMin(this.root));
     }
     
     public boolean contains(AvlNode n, T data) {
