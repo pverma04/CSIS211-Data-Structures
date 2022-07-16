@@ -74,14 +74,13 @@ public class HashTable<T> {
             Node p = list.getNode(0); //head node
             while (p.mNext != null) { //traverse
                 if (((Pair) p.mData).getFirst().equals(name)) { //if name has been found
-                    //return ((Pair) p.mData).getFirst() + "(" + hashFunc("" + ((Pair) p.mData).getFirst()) + "-" + p.mOffset + ")" + " " + ((Pair) p.mData).getSecond();
-                    return ((Pair) p.mData).getFirst() + "(" + pos + "-" + p.mOffset + ")" + " " + ((Pair) p.mData).getSecond();
-
+                    return ((Pair) p.mData).getFirst() + "(" + hashFunc("" + ((Pair) p.mData).getFirst()) + "-" + p.mOffset + ")" + " " + ((Pair) p.mData).getSecond();
                 }
                 p = p.mNext;
             }
             if (((Pair) p.mData).getFirst().equals(name)) { //for the last Pair in the PL
-                return ((Pair) p.mData).getFirst() + "(" + pos + "-" + p.mOffset + ")" + " " + ((Pair) p.mData).getSecond();            }
+                return ((Pair) p.mData).getFirst() + "(" + hashFunc("" + ((Pair) p.mData).getFirst()) + "-" + p.mOffset + ")" + " " + ((Pair) p.mData).getSecond();
+            }
             return "Name not found";
         }
     }
