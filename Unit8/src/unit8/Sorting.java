@@ -6,14 +6,15 @@ public class Sorting {
 
     double[] dataArray;
     Timer t;
+    int iterations;
 
     public Sorting() {
         this(null);
-        
     }
 
     public Sorting(double[] data) {
         this.dataArray = data;
+        this.iterations = 0;
     }
 
     public void setData(double[] newData) {
@@ -141,6 +142,15 @@ public class Sorting {
         t.stopTimer();
     }
     
+    public double printMicro(){
+        return t.getMicro();
+    }
+    public double printMilli() {
+        return t.getMilli();
+    }
+    public double printSec() {
+        return t.getSecond();
+    }
     public void printArray(){
         String rv = "[";
         for (int i = 0; i < this.dataArray.length - 1; i++) {
@@ -148,7 +158,13 @@ public class Sorting {
         } 
         rv += this.dataArray[this.dataArray.length - 1] + "]";
         System.out.println(rv);
-        System.out.println(t.getMilli());
+        /*
+        System.out.println("Microseconds: " + this.printMicro());
+        System.out.println("Milliseconds: " + this.printMilli());
+*/
+        System.out.println("Seconds: " + this.printSec());
+        
+
     }
     
 }
