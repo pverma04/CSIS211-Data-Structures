@@ -1,6 +1,6 @@
 package unit8;
 
-public class Timer {
+public class Timer { //class is as given in the project description
 
     double count = 0;
 

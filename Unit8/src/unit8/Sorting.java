@@ -4,26 +4,31 @@ import java.util.ArrayList;
 
 public class Sorting {
 
-    double[] dataArray;
-    Timer t;
-    int iterations;
+    private double[] mDataArray;
+    private Timer mT;
+    private int mIterations;
 
     public Sorting() {
         this(null);
     }
 
     public Sorting(double[] data) {
-        this.dataArray = data;
-        this.iterations = 0;
+        this.mDataArray = data;
+        this.mIterations = 0;
     }
 
     public void setData(double[] newData) {
-        this.dataArray = newData;
+        this.mDataArray = newData;
+    }
+    
+    public int getIterations() {
+        return this.mIterations;
     }
     
     public void insertionSort(double[] arr) {
-        t = new Timer();
-        t.startTimer();
+        mT = new Timer();
+        mT.startTimer();
+        this.mIterations = 0;
         for (int i = 1; i < arr.length; i++) { //start at index 1, to compare a value to the left
             double current = arr[i];
             int j = i - 1; //position to the left of current index
@@ -31,16 +36,19 @@ public class Sorting {
             while ((j >= 0) && (arr[j] > current)) { //if directly to the left, the number is bigger, swap
                 arr[j + 1] = arr[j];
                 j = j - 1;
+                mIterations++;
             }
             arr[j + 1] = current; //"current" has now be sorted
+            mIterations++;
         }
-        this.dataArray = arr;
-        t.stopTimer();
+        this.mDataArray = arr;
+        mT.stopTimer();
     }
     
     public void selectionSort(double [] arr) {
-        t = new Timer();
-        t.startTimer();
+        mT = new Timer();
+        mT.startTimer();
+        this.mIterations = 0;
         int indexMin;
         for (int i = 0; i < arr.length - 1; i++) {
             indexMin = i; //min is set to the start of the unsorted portion of the array
@@ -48,13 +56,15 @@ public class Sorting {
                 if (arr[j] < arr[indexMin]) { //find and replace indexMin with "j", if number is smaller
                     indexMin = j; 
                 }
+                mIterations++;
             }
             double temp = arr[indexMin]; //now indexMin has been set to the smallest value of the unsorted array
             arr[indexMin] = arr[i]; //swap i and indexMin
             arr[i] = temp; //after this continue moving down the array
+            mIterations++;
         }
-        this.dataArray = arr;
-        t.stopTimer();
+        this.mDataArray = arr;
+        mT.stopTimer();
     }
    
     private int choosePivot(int a, int b) {
@@ -66,8 +76,9 @@ public class Sorting {
         arr[posB] = temp;
     }
     public void mergeSort(double[] arr) {
-        t = new Timer();
-        t.startTimer();
+        mT = new Timer();
+        mT.startTimer();
+        this.mIterations = 0;
         int inputLength = arr.length;
 
         if (inputLength < 2) {
@@ -80,23 +91,26 @@ public class Sorting {
 
         for (int i = 0; i < midIndex; i++) {
             leftHalf[i] = arr[i];
+            this.mIterations++;
         }
         for (int i = midIndex; i < inputLength; i++) {
             rightHalf[i - midIndex] = arr[i];
+            this.mIterations++;
         }
 
         mergeSort(leftHalf);
         mergeSort(rightHalf);
 
         merge(arr, leftHalf, rightHalf);
-        this.dataArray = arr;
-        t.stopTimer();
+        this.mDataArray = arr;
+        mT.stopTimer();
     }
 
-    private static void merge(double[] arr, double[] leftHalf, double[] rightHalf) {
+    private void merge(double[] arr, double[] leftHalf, double[] rightHalf) {
+
         int leftSize = leftHalf.length;
         int rightSize = rightHalf.length;
-
+        
         int i = 0, j = 0, k = 0;
 
         while (i < leftSize && j < rightSize) {
@@ -107,6 +121,7 @@ public class Sorting {
                 arr[k] = rightHalf[j];
                 j++;
             }
+            this.mIterations++;
             k++;
         }
 
@@ -114,18 +129,21 @@ public class Sorting {
             arr[k] = leftHalf[i];
             i++;
             k++;
+            this.mIterations++;
         }
 
         while (j < rightSize) {
             arr[k] = rightHalf[j];
             j++;
             k++;
+            this.mIterations++;
         }
     }
     
     public void shellSort(double [] arr) {
-        t = new Timer();
-        t.startTimer();
+        mT = new Timer();
+        mT.startTimer();
+        this.mIterations = 0;
         int len = arr.length;
         for (int gap = len / 2; gap > 0; gap /= 2) { //reduce gap each time program recurs
             
@@ -134,37 +152,39 @@ public class Sorting {
                 int j;
                 for (j = i; (j >= gap) && (arr[j - gap] > temp); j -= gap) { 
                     arr[j] = arr[j - gap];
+                    this.mIterations++;
                 }
                 arr[j] = temp;
+                this.mIterations++;
             }
+            this.mIterations++;
         }
-        this.dataArray = arr;
-        t.stopTimer();
+        this.mDataArray = arr;
+        mT.stopTimer();
     }
     
     public double printMicro(){
-        return t.getMicro();
+        return mT.getMicro();
     }
     public double printMilli() {
-        return t.getMilli();
+        return mT.getMilli();
     }
     public double printSec() {
-        return t.getSecond();
+        return mT.getSecond();
     }
     public void printArray(){
         String rv = "[";
-        for (int i = 0; i < this.dataArray.length - 1; i++) {
-            rv += this.dataArray[i] + ", ";
+        for (int i = 0; i < this.mDataArray.length - 1; i++) {
+            rv += this.mDataArray[i] + ", ";
         } 
-        rv += this.dataArray[this.dataArray.length - 1] + "]";
+        rv += this.mDataArray[this.mDataArray.length - 1] + "]";
         System.out.println(rv);
         /*
         System.out.println("Microseconds: " + this.printMicro());
         System.out.println("Milliseconds: " + this.printMilli());
-*/
+        */
         System.out.println("Seconds: " + this.printSec());
-        
-
+        System.out.println("Iter: " + this.getIterations());
     }
     
-}
+} 
