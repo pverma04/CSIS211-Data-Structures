@@ -17,14 +17,35 @@ public class Sorting {
         this.mIterations = 0;
     }
 
+    /**
+     * ***********************************************
+     * @par Name setData
+     * @purpose Sets the data to a new double[]
+     * @param [in] : double[] newData
+     * @return None ***********************************************
+     */
     public void setData(double[] newData) {
         this.mDataArray = newData;
     }
     
+    /**
+     * ***********************************************
+     * @par Name getIterations
+     * @purpose Gets the number of iterations of the last sort
+     * @param [in] : None
+     * @return Int ***********************************************
+     */
     public int getIterations() {
         return this.mIterations;
     }
     
+    /**
+     * ***********************************************
+     * @par Name insertionSort
+     * @purpose Follows the insertion sort algorithm
+     * @param [in] : double[] arr
+     * @return None ***********************************************
+     */
     public void insertionSort(double[] arr) {
         mT = new Timer();
         mT.startTimer();
@@ -45,6 +66,13 @@ public class Sorting {
         mT.stopTimer();
     }
     
+    /**
+     * ***********************************************
+     * @par Name selectionSort
+     * @purpose Follows the selection sort algorithm
+     * @param [in] : double[] arr
+     * @return None ***********************************************
+     */
     public void selectionSort(double [] arr) {
         mT = new Timer();
         mT.startTimer();
@@ -67,14 +95,17 @@ public class Sorting {
         mT.stopTimer();
     }
    
+    /*
     private int choosePivot(int a, int b) {
         return ((a + b) / 2);
     }
+    
     private void swap(double[] arr, int posA, int posB) {
         double temp = arr[posA];
         arr[posA] = arr[posB];
         arr[posB] = temp;
     }
+    */
     public void mergeSort(double[] arr) {
         mT = new Timer();
         mT.startTimer();
@@ -179,11 +210,10 @@ public class Sorting {
         } 
         rv += this.mDataArray[this.mDataArray.length - 1] + "]";
         System.out.println(rv);
-        /*
+        
         System.out.println("Microseconds: " + this.printMicro());
-        System.out.println("Milliseconds: " + this.printMilli());
-        */
-        System.out.println("Seconds: " + this.printSec());
+        //System.out.println("Milliseconds: " + this.printMilli());
+        //System.out.println("Seconds: " + this.printSec());
         System.out.println("Iter: " + this.getIterations());
     }
     
