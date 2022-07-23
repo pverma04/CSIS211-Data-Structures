@@ -29,13 +29,13 @@ public class LinkedList<T> {
         }
     }
 
-    /**
-     * ***********************************************
-     * @par Name printList
-     * @purpose Prints the contents of the LinkedList in order
-     * @param [in] : None
-     * @return None ***********************************************
-     */
+//    /**
+//     * ***********************************************
+//     * @par Name printList
+//     * @purpose Prints the contents of the LinkedList in order
+//     * @param [in] : None
+//     * @return None ***********************************************
+//     */
     public void printList() {
         Node p = this.mHead; //to traverse
         if (p != null) {
