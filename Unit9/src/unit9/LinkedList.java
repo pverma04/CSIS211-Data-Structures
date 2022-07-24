@@ -1,3 +1,10 @@
+/** ***********************************************
+ * File: LinkedList.java
+ * Author: Parth Verma
+ * Description: This file contains code for the LinkedList class
+ * Date: July 24, 2022
+ ************************************************ */
+
 package unit9;
 
 public class LinkedList<T> {

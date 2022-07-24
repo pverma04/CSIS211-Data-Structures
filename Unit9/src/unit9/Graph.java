@@ -1,3 +1,10 @@
+/** ***********************************************
+ * File: Graph.java
+ * Author: Parth Verma
+ * Description: This file contains code for the Graph class
+ * Date: July 24, 2022
+ ************************************************ */
+
 package unit9;
 
 import java.util.*;
@@ -128,32 +135,6 @@ public class Graph<T> {
      * @return void ***********************************************
      */
     public void dfs(int srcIndex) {
-        /*
-        int firstNotNullIndex = srcIndex;
-        for (int i = firstNotNullIndex; i < mTABLE_SIZE; i++) {
-            if (mVertList.get(i) != null) {
-                firstNotNullIndex = i;
-                break;
-            }
-        }
-        try {
-            Node headAtPos = mVertList.get(firstNotNullIndex).getHead();
-            dfsRecur(headAtPos);
-        } catch (NullPointerException exc) {
-            try{
-                for (int i = srcIndex; i >= 0; i--) {
-                    if (mVertList.get(i) != null) {
-                        firstNotNullIndex = i;
-                        break;
-                    }
-                }
-                Node headAtPos = mVertList.get(firstNotNullIndex).getHead();
-                dfsRecur(headAtPos);
-            } catch (NullPointerException nPExc) {
-                System.out.println("Empty Graph");
-            }
-        }
-         */
         try {
             String cityName = mCitiesList.get(srcIndex); //given an index (number corresponding to the cities: 0 - first city added, 1 - second city added, etc), retreive it from the cities list array
             this.dfs(cityName);

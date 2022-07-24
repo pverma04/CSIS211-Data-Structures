@@ -1,3 +1,9 @@
+/** ***********************************************
+ * File: Node.java
+ * Author: Parth Verma
+ * Description: This file contains code for the Node class
+ * Date: July 24, 2022
+ ************************************************ */
 
 package unit9;
 

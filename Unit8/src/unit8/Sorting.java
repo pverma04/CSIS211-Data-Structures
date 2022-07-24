@@ -1,3 +1,9 @@
+/** ***********************************************
+ * File: Timer.java
+ * Author: Parth Verma
+ * Description: This file contains code for the Sorting class (4 sorting alogirthms)
+ * Date: July 22, 2022
+ ************************************************ */
 package unit8;
 
 import java.util.ArrayList;

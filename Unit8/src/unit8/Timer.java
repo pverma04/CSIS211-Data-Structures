@@ -1,3 +1,9 @@
+/** ***********************************************
+ * File: Timer.java
+ * Author: Parth Verma
+ * Description: This file contains code for the Timer class (As given, no edits or additions have been made)
+ * Date: July 22, 2022
+ ************************************************ */
 package unit8;
 
 public class Timer { //class is as given in the project description
