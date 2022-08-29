@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>Unit2</name>
+            <name>Unit2 (Pair and PairList Classes - ArrayList Type)</name>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
